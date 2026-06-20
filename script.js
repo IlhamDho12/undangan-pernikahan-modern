@@ -196,7 +196,7 @@ document.addEventListener("DOMContentLoaded", function () {
         id: ticketId,
         name: name,
         guests: guests,
-        event: "Redho & Mitha Wedding"
+        event: "Farel & Amanda Wedding"
       });
       // QR server API to load clean QR code
       ticketQrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&color=2c2925&bgcolor=faf8f5&data=${encodeURIComponent(qrData)}`;
@@ -211,7 +211,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Setup WhatsApp share content
       btnShareWa.onclick = function () {
-        const textMessage = `Halo Redho & Mitha, saya ingin mengonfirmasi kehadiran di acara pernikahan kalian.%0A%0A*Nama:* ${encodeURIComponent(name)}%0A*Kehadiran:* Hadir (${guests} Orang)%0A*Kode Tiket:* ${ticketId}%0A*Pesan:* "${encodeURIComponent(message)}"%0A%0A*Sampai jumpa di lokasi acara!*`;
+        const textMessage = `Halo Farel & Amanda, saya ingin mengonfirmasi kehadiran di acara pernikahan kalian.%0A%0A*Nama:* ${encodeURIComponent(name)}%0A*Kehadiran:* Hadir (${guests} Orang)%0A*Kode Tiket:* ${ticketId}%0A*Pesan:* "${encodeURIComponent(message)}"%0A%0A*Sampai jumpa di lokasi acara!*`;
         window.open(`https://wa.me/6281234567890?text=${textMessage}`, '_blank');
       };
 
@@ -243,76 +243,70 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initial dummy wishes if localstorage is empty
   const defaultWishes = [
     {
-      name: "Sifaatul",
+      name: "Setya",
       status: "Hadir",
-      message: "Masya Allah, selamat ya Redho & Mitha! Semoga lancar sampai hari H dan menjadi keluarga yang sakinah, mawaddah, warahmah.",
+      message: "Selamat ya Farel & Amanda! Semoga lancar sampai hari H dan selalu dilimpahi keberkahan.",
       timestamp: new Date().toISOString()
     },
     {
-      name: "Meliya Febriani",
+      name: "Riana",
       status: "Hadir",
-      message: "Selamat menempuh hidup baru Mitha & Redho! Dilancarkan segala urusannya dan bahagia selamanya ya.",
+      message: "Happy Wedding Amanda & Farel! Semoga menjadi keluarga yang sakinah, mawaddah, warahmah.",
       timestamp: new Date().toISOString()
     },
     {
-      name: "Robiatul Izza",
+      name: "Aditya",
       status: "Hadir",
-      message: "Happy Wedding Mitha dan Redho! Semoga berkah pernikahannya, sakinah selalu sampai surga.",
+      message: "Selamat menempuh hidup baru bro Farel dan Amanda! Sukses acaranya.",
       timestamp: new Date().toISOString()
     },
     {
-      name: "Fatroh",
+      name: "Dini",
       status: "Hadir",
-      message: "Selamat ya bro Redho dan Mitha! Semoga dilancarkan akad dan resepsinya. Samawa selalu!",
+      message: "Selamat ya untuk kedua mempelai! Semoga bahagia selamanya.",
       timestamp: new Date().toISOString()
     },
     {
-      name: "Nafian",
+      name: "Faisal",
       status: "Hadir",
-      message: "Selamat menempuh ibadah terpanjang Redho & Mitha. Semoga bahagia selalu sampai akhir hayat.",
+      message: "Barakallahu lakum wa baraka 'alaikum. Selamat ya Farel & Amanda!",
       timestamp: new Date().toISOString()
     },
     {
-      name: "Agam",
+      name: "Melina",
       status: "Hadir",
-      message: "Barakallahu lakum wa baraka 'alaikum. Selamat ya Mitha & Redho, semoga menjadi keluarga yang sakinah.",
+      message: "Happy wedding Amanda & Farel! Lancar dan samawa ya.",
       timestamp: new Date().toISOString()
     },
     {
-      name: "Farhan",
+      name: "Hendra",
       status: "Hadir",
-      message: "Happy wedding! Selamat menempuh hidup baru Redho & Mitha, semoga sakinah selalu.",
+      message: "Selamat ya Farel & Amanda! Semoga cepat dikaruniai momongan.",
       timestamp: new Date().toISOString()
     },
     {
-      name: "Koko",
+      name: "Cynthia",
       status: "Hadir",
-      message: "Selamat bro Redho & Mitha! Semoga menjadi keluarga yang sakinah, cepat dikaruniai momongan yang sholeh/sholehah.",
+      message: "Happy Wedding guys! Bahagia selalu sampai akhir hayat ya.",
       timestamp: new Date().toISOString()
     },
     {
-      name: "Lutfi",
+      name: "Ryan",
       status: "Hadir",
-      message: "Selamat ya Redho dan Mitha! Semoga dilancarkan semua prosesi akad di Lampung. Berkah selalu!",
+      message: "Selamat menempuh hidup baru Farel dan Amanda! Berkah selalu.",
       timestamp: new Date().toISOString()
     },
     {
-      name: "Alif",
+      name: "Sarah",
       status: "Hadir",
-      message: "Selamat menempuh hidup baru Redho & Mitha! Semoga dilimpahi keberkahan dan kebahagiaan setiap waktu.",
-      timestamp: new Date().toISOString()
-    },
-    {
-      name: "Koyong",
-      status: "Hadir",
-      message: "Selamat ya Koyong Redho & Mitha! Semoga berkah dan bahagia selalu menempuh bahtera rumah tangga.",
+      message: "Masya Allah, selamat ya Amanda & Farel! Semoga bahagia lahir batin.",
       timestamp: new Date().toISOString()
     }
   ];
 
   function getWishes() {
     const stored = localStorage.getItem("wedding_wishes");
-    if (!stored || stored.includes("Rian") || stored.includes("Nadine")) {
+    if (!stored || stored.includes("Redho") || stored.includes("Mitha") || stored.includes("Rian") || stored.includes("Nadine")) {
       localStorage.setItem("wedding_wishes", JSON.stringify(defaultWishes));
       return defaultWishes;
     }

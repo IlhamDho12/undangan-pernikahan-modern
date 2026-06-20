@@ -4,20 +4,20 @@
 
 :root {
   /* Color Palette */
-  --bg-primary: #FAF8F5;
-  --bg-secondary: #F3EFE9;
-  --text-primary: #2C2925;
-  --text-secondary: #5E5851;
-  --color-gold: #C09A67;
-  --color-gold-dark: #A47D4C;
-  --color-gold-light: #E6DCD0;
-  --color-gold-glow: rgba(192, 154, 103, 0.15);
+  --bg-primary: #F4F6F4;
+  --bg-secondary: #E8ECE8;
+  --text-primary: #253027;
+  --text-secondary: #4D5A4F;
+  --color-gold: #B59A57;
+  --color-gold-dark: #91773E;
+  --color-gold-light: #DFD5BE;
+  --color-gold-glow: rgba(181, 154, 87, 0.12);
   
   /* Utilities */
-  --card-shadow: 0 10px 30px rgba(44, 41, 37, 0.04);
-  --glass-shadow: 0 8px 32px 0 rgba(44, 41, 37, 0.08);
-  --glass-bg: rgba(250, 248, 245, 0.8);
-  --glass-border: rgba(192, 154, 103, 0.18);
+  --card-shadow: 0 10px 30px rgba(37, 48, 39, 0.04);
+  --glass-shadow: 0 8px 32px 0 rgba(37, 48, 39, 0.08);
+  --glass-bg: rgba(244, 246, 244, 0.85);
+  --glass-border: rgba(181, 154, 87, 0.18);
   --radius-sm: 8px;
   --radius-md: 16px;
   --radius-lg: 24px;
@@ -1630,10 +1630,10 @@ p {
 
 @keyframes pulse-glow {
   0% {
-    box-shadow: 0 4px 15px rgba(192, 154, 103, 0.3);
+    box-shadow: 0 4px 15px rgba(181, 154, 87, 0.3);
   }
   100% {
-    box-shadow: 0 4px 25px rgba(192, 154, 103, 0.6);
+    box-shadow: 0 4px 25px rgba(181, 154, 87, 0.6);
   }
 }
 
