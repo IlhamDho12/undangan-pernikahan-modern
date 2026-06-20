@@ -1,0 +1,16 @@
+{
+  "name": "undangan-pernikahan-modern",
+  "version": "1.0.0",
+  "description": "Premium Wedding Invitation Website",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx browser-sync start --server --files \"*.html, *.css, *.js\""
+  },
+  "keywords": [
+    "wedding",
+    "invitation",
+    "digital"
+  ],
+  "author": "Antigravity",
+  "license": "ISC"
+}

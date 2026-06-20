@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Undangan Pernikahan: Redho & Mitha</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Undangan Pernikahan Digital Redho & Mitha. Kami mengundang Anda untuk merayakan momen bahagia bersama kami.">
+  <meta name="keywords" content="undangan digital, pernikahan redho mitha, wedding invitation online">
+  <meta name="author" content="Antigravity Agency">
+  
+  <!-- Google Fonts - Serif (Playfair Display) & Sans-serif (Inter) & Cursive (Sacramento) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Sacramento&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons for modern visuals -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="scroll-locked">
+
+  <!-- Background Music Audio Element -->
+  <audio id="bg-music" loop>
+    <source src="music/nadhif.mp3" type="audio/mp3">
+    Browser Anda tidak mendukung pemutar musik.
+  </audio>
+
+  <!-- Floating Audio Controls -->
+  <div id="audio-control" class="audio-control hidden">
+    <button id="audio-btn" aria-label="Toggle Music">
+      <i id="audio-icon" class="fas fa-music fa-spin"></i>
+    </button>
+  </div>
+
+  <!-- Toast Notification Container for Clipboard Copy -->
+  <div id="toast" class="toast">Nomor rekening berhasil disalin!</div>
+
+  <!-- 1. COVER / WELCOME OVERLAY (Layar Pembuka Dinamis) -->
+  <div id="cover-overlay" class="cover-overlay">
+    <div class="cover-bg-blur"></div>
+    <div class="cover-content text-center">
+      <p class="cover-subtitle animate-fade-in">THE WEDDING OF</p>
+      <h1 class="cover-title animate-zoom-in">Redho & Mitha</h1>
+      <p class="cover-date animate-fade-in">Senin, 14 Desember 2026</p>
+      
+      <!-- Personalized Greeting -->
+      <div class="guest-card animate-fade-in-up">
+        <p class="to-text">Kepada Yth. Bapak/Ibu/Saudara/i:</p>
+        <h2 id="guest-name" class="guest-name">Nama Tamu Undangan</h2>
+        <p class="msg-text">Kami mengundang Anda untuk hadir di hari bahagia kami.</p>
+      </div>
+      
+      <button id="btn-open-invite" class="btn-primary btn-open animate-bounce">
+        <i class="fas fa-envelope-open"></i> Buka Undangan
+      </button>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT CONTAINER (Hidden/Locked initially) -->
+  <main id="main-content" class="main-content">
+    
+    <!-- 2. HERO SECTION -->
+    <section id="hero" class="hero-section text-center">
+      <div class="hero-bg" style="background-image: url('assets/prewed.png');"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <p class="hero-subtitle scroll-animate" data-animation="fade-in-up">THE WEDDING OF</p>
+        <h2 class="hero-names scroll-animate" data-animation="zoom-in">Redho & Mitha</h2>
+        <p class="hero-date scroll-animate" data-animation="fade-in-up">14 . 12 . 2026</p>
+      </div>
+      <div class="scroll-indicator scroll-animate" data-animation="fade-in">
+        <span>Gulir ke Bawah</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+    </section>
+
+    <!-- 3. QUOTE SECTION -->
+    <section id="quote" class="quote-section text-center section-padding">
+      <div class="container">
+        <div class="quote-box scroll-animate" data-animation="fade-in-up">
+          <i class="fas fa-quote-left quote-icon"></i>
+          <p class="quote-text">
+            "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang."
+          </p>
+          <p class="quote-source">Ar-Rum: 21</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. COUPLE SECTION (Profil Mempelai) -->
+    <section id="couple" class="couple-section section-padding">
+      <div class="container">
+        <div class="section-header text-center scroll-animate" data-animation="fade-in-up">
+          <h2 class="section-title-cursive">Kedua Mempelai</h2>
+          <p class="section-subtitle">Memperkenalkan diri kami yang akan mengikat janji suci</p>
+        </div>
+        
+        <div class="couple-grid">
+          <!-- Groom (Mempelai Pria) -->
+          <div class="couple-card groom-card text-center scroll-animate" data-animation="slide-left">
+            <div class="avatar-wrapper">
+              <img src="assets/groom.png" alt="Redho Ilhamdi" class="couple-img">
+            </div>
+            <h3 class="couple-name">Redho Ilhamdi, S.Kom.</h3>
+            <p class="couple-info">Putra dari Bapak Alkodri & Ibu Jumro</p>
+            <div class="social-links">
+              <a href="https://instagram.com/ilhamdho_" target="_blank" rel="noopener" aria-label="Instagram Redho"><i class="fab fa-instagram"></i> @ilhamdho_</a>
+            </div>
+          </div>
+          
+          <div class="couple-divider text-center scroll-animate" data-animation="zoom-in">
+            <span class="ampersand">&</span>
+          </div>
+
+          <!-- Bride (Mempelai Wanita) -->
+          <div class="couple-card bride-card text-center scroll-animate" data-animation="slide-right">
+            <div class="avatar-wrapper">
+              <img src="assets/bride.png" alt="Miftahul Janah" class="couple-img">
+            </div>
+            <h3 class="couple-name">Miftahul Janah, S.Pd.</h3>
+            <p class="couple-info">Putri dari Bapak Rubangi & Ibu Tugirah</p>
+            <div class="social-links">
+              <a href="https://instagram.com/mitaays" target="_blank" rel="noopener" aria-label="Instagram Mitha"><i class="fab fa-instagram"></i> @mitaays</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. COUNTDOWN SECTION -->
+    <section id="countdown-sec" class="countdown-section section-padding text-center">
+      <div class="container">
+        <h2 class="countdown-title scroll-animate" data-animation="fade-in-up">Menghitung Hari Bahagia</h2>
+        <p class="countdown-subtitle scroll-animate" data-animation="fade-in-up">Menuju janji suci pernikahan kami:</p>
+        
+        <div id="timer" class="timer-container scroll-animate" data-animation="zoom-in">
+          <div class="timer-box">
+            <span id="days" class="timer-number">00</span>
+            <span class="timer-label">Hari</span>
+          </div>
+          <div class="timer-box">
+            <span id="hours" class="timer-number">00</span>
+            <span class="timer-label">Jam</span>
+          </div>
+          <div class="timer-box">
+            <span id="minutes" class="timer-number">00</span>
+            <span class="timer-label">Menit</span>
+          </div>
+          <div class="timer-box">
+            <span id="seconds" class="timer-number">00</span>
+            <span class="timer-label">Detik</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. EVENT DETAILS SECTION (Acara & Jadwal) -->
+    <section id="events" class="events-section section-padding">
+      <div class="container">
+        <div class="section-header text-center scroll-animate" data-animation="fade-in-up">
+          <h2 class="section-title-cursive">Waktu & Tempat Acara</h2>
+          <p class="section-subtitle">Informasi lengkap mengenai jadwal akad dan resepsi pernikahan</p>
+        </div>
+        
+        <div class="events-grid">
+          <!-- Akad Nikah -->
+          <div class="event-card scroll-animate" data-animation="slide-left">
+            <div class="event-badge"><i class="fas fa-heart"></i></div>
+            <h3 class="event-title">Akad Nikah</h3>
+            <div class="event-divider"></div>
+            
+            <div class="event-details">
+              <div class="detail-item">
+                <i class="far fa-calendar-alt"></i>
+                <div>
+                  <p class="detail-label">Hari / Tanggal</p>
+                  <p class="detail-val font-semibold">Senin, 14 Desember 2026</p>
+                </div>
+              </div>
+              <div class="detail-item">
+                <i class="far fa-clock"></i>
+                <div>
+                  <p class="detail-label">Waktu</p>
+                  <p class="detail-val font-semibold">08.00 - 10.00 WIB</p>
+                </div>
+              </div>
+              <div class="detail-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <div>
+                  <p class="detail-label">Lokasi</p>
+                  <p class="detail-val">Masjid Al Bakrie Bandar Lampung</p>
+                  <p class="detail-sub">Enggal, Kota Bandar Lampung, Lampung</p>
+                </div>
+              </div>
+              <!-- Mini Map Embed -->
+              <div class="event-map">
+                <iframe src="https://maps.google.com/maps?q=Masjid%20Al%20Bakrie%20Bandar%20Lampung&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="160" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </div>
+            
+            <div class="event-actions">
+              <a href="https://www.google.com/maps/search/?api=1&query=Masjid+Al+Bakrie+Bandar+Lampung" target="_blank" rel="noopener" class="btn-secondary">
+                <i class="fas fa-map-marked-alt"></i> Petunjuk Arah
+              </a>
+              <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Akad+Nikah+Redho+%26+Mitha&dates=20261214T010000Z/20261214T030000Z&details=Selamat+datang+di+Akad+Nikah+Redho+%26+Mitha&location=Masjid+Al+Bakrie+Bandar+Lampung" target="_blank" class="btn-text">
+                <i class="far fa-calendar-plus"></i> Tambah Kalender
+              </a>
+            </div>
+          </div>
+
+          <!-- Resepsi Pernikahan -->
+          <div class="event-card scroll-animate" data-animation="slide-right">
+            <div class="event-badge"><i class="fas fa-glass-cheers"></i></div>
+            <h3 class="event-title">Resepsi</h3>
+            <div class="event-divider"></div>
+            
+            <div class="event-details">
+              <div class="detail-item">
+                <i class="far fa-calendar-alt"></i>
+                <div>
+                  <p class="detail-label">Hari / Tanggal</p>
+                  <p class="detail-val font-semibold">Senin, 14 Desember 2026</p>
+                </div>
+              </div>
+              <div class="detail-item">
+                <i class="far fa-clock"></i>
+                <div>
+                  <p class="detail-label">Waktu</p>
+                  <p class="detail-val font-semibold">11.00 - 16.00 WIB</p>
+                </div>
+              </div>
+              <div class="detail-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <div>
+                  <p class="detail-label">Lokasi</p>
+                  <p class="detail-val">Hotel Radisson Bandar Lampung</p>
+                  <p class="detail-sub font-light">Jl. Teuku Umar No.1, Kedaton, Kota Bandar Lampung, Lampung</p>
+                </div>
+              </div>
+              <!-- Mini Map Embed -->
+              <div class="event-map">
+                <iframe src="https://maps.google.com/maps?q=Hotel%20Radisson%20Bandar%20Lampung&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="160" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </div>
+            
+            <div class="event-actions">
+              <a href="https://www.google.com/maps/search/?api=1&query=Hotel+Radisson+Bandar+Lampung" target="_blank" rel="noopener" class="btn-secondary">
+                <i class="fas fa-map-marked-alt"></i> Petunjuk Arah
+              </a>
+              <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Resepsi+Pernikahan+Redho+%26+Mitha&dates=20261214T040000Z/20261214T090000Z&details=Selamat+datang+di+Resepsi+Pernikahan+Redho+%26+Mitha&location=Hotel+Radisson+Bandar+Lampung" target="_blank" class="btn-text">
+                <i class="far fa-calendar-plus"></i> Tambah Kalender
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. LOVE STORY SECTION (Garis Waktu Cinta) -->
+    <section id="story" class="story-section section-padding">
+      <div class="container">
+        <div class="section-header text-center scroll-animate" data-animation="fade-in-up">
+          <h2 class="section-title-cursive">Perjalanan Cinta Kami</h2>
+          <p class="section-subtitle">Kisah bagaimana awal takdir menyatukan langkah kami</p>
+        </div>
+        
+        <div class="story-timeline">
+          <!-- Timeline Item 1 -->
+          <div class="story-item scroll-animate" data-animation="fade-in-up">
+            <div class="story-dot"><i class="fab fa-telegram-plane"></i></div>
+            <div class="story-panel">
+              <div class="story-header">
+                <span class="story-date">Awal Kenal</span>
+                <h3 class="story-title">Kenal Lewat Telegram</h3>
+              </div>
+              <div class="story-body">
+                <p>Kami pertama kali diperkenalkan secara daring melalui sebuah grup Telegram. Obrolan yang awalnya santai dan berbagi informasi lama-kelamaan menumbuhkan kecocokan yang mendalam.</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Timeline Item 2 -->
+          <div class="story-item scroll-animate" data-animation="fade-in-up">
+            <div class="story-dot"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="story-panel">
+              <div class="story-header">
+                <span class="story-date">Januari 2024</span>
+                <h3 class="story-title">Pertama Kali Bertemu</h3>
+              </div>
+              <div class="story-body">
+                <p>Setelah menjalin komunikasi jarak jauh, kami akhirnya memutuskan untuk bertemu secara langsung untuk pertama kalinya di Bandar Lampung pada bulan Januari 2024. Pertemuan ini memperkuat keyakinan kami satu sama lain.</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Timeline Item 3 -->
+          <div class="story-item scroll-animate" data-animation="fade-in-up">
+            <div class="story-dot"><i class="fas fa-ring"></i></div>
+            <div class="story-panel text-right">
+              <div class="story-header">
+                <span class="story-date">Agustus 2025</span>
+                <h3 class="story-title">Lamaran & Khitbah</h3>
+              </div>
+              <div class="story-body">
+                <p>Di hadapan keluarga besar kedua belah pihak, kami mengikat janji komitmen kami dalam acara Lamaran & Khitbah yang khidmat, bersiap melangkah bersama ke jenjang pernikahan suci.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. GALLERY SECTION -->
+    <section id="gallery" class="gallery-section section-padding">
+      <div class="container">
+        <div class="section-header text-center scroll-animate" data-animation="fade-in-up">
+          <h2 class="section-title-cursive">Galeri Momen Indah</h2>
+          <p class="section-subtitle">Kilas kebersamaan kami dalam bingkai gambar pre-wedding</p>
+        </div>
+        
+        <div class="gallery-grid">
+          <div class="gallery-item scroll-animate" data-animation="zoom-in">
+            <img src="assets/prewed.png" alt="Momen Pre-wedding 1" class="gallery-img">
+            <div class="gallery-overlay">
+              <i class="fas fa-search-plus"></i>
+            </div>
+          </div>
+          <div class="gallery-item scroll-animate" data-animation="zoom-in">
+            <img src="assets/groom.png" alt="Momen Pre-wedding 2" class="gallery-img">
+            <div class="gallery-overlay">
+              <i class="fas fa-search-plus"></i>
+            </div>
+          </div>
+          <div class="gallery-item scroll-animate" data-animation="zoom-in">
+            <img src="assets/bride.png" alt="Momen Pre-wedding 3" class="gallery-img">
+            <div class="gallery-overlay">
+              <i class="fas fa-search-plus"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lightbox Modal for Gallery Images -->
+    <div id="lightbox" class="lightbox">
+      <span class="lightbox-close">&times;</span>
+      <img class="lightbox-content" id="lightbox-img" alt="Lightbox Preview">
+      <div id="lightbox-caption" class="lightbox-caption"></div>
+    </div>
+
+    <!-- 9. RSVP & GUEST PASS SECTION (Fitur Canggih RSVP & QR Ticket) -->
+    <section id="rsvp-section" class="rsvp-section section-padding">
+      <div class="container">
+        <div class="section-header text-center scroll-animate" data-animation="fade-in-up">
+          <h2 class="section-title-cursive">Konfirmasi Kehadiran</h2>
+          <p class="section-subtitle">Bantu kami mempersiapkan kenyamanan acara dengan mengisi form RSVP berikut</p>
+        </div>
+        
+        <div class="rsvp-container">
+          <!-- RSVP Input Form -->
+          <div class="rsvp-card scroll-animate" data-animation="slide-left" id="rsvp-form-card">
+            <form id="rsvp-form" class="rsvp-form">
+              <div class="form-group">
+                <label for="rsvp-name">Nama Tamu</label>
+                <input type="text" id="rsvp-name" placeholder="Masukkan nama Anda" required>
+              </div>
+              <div class="form-group">
+                <label for="rsvp-status">Konfirmasi Kehadiran</label>
+                <select id="rsvp-status" required>
+                  <option value="" disabled selected>Pilih Kehadiran</option>
+                  <option value="Hadir">Saya Akan Hadir</option>
+                  <option value="Tidak Hadir">Maaf, Saya Tidak Bisa Hadir</option>
+                </select>
+              </div>
+              <div class="form-group" id="guest-count-group">
+                <label for="rsvp-guests">Jumlah Tamu</label>
+                <select id="rsvp-guests">
+                  <option value="1">1 Orang</option>
+                  <option value="2">2 Orang</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="rsvp-message">Pesan & Ucapan Doa</label>
+                <textarea id="rsvp-message" rows="4" placeholder="Tuliskan ucapan selamat dan doa untuk mempelai" required></textarea>
+              </div>
+              
+              <button type="submit" class="btn-primary w-full">
+                <i class="far fa-paper-plane"></i> Kirim Konfirmasi
+              </button>
+            </form>
+          </div>
+
+          <!-- DYNAMIC TICKETS (Tampil setelah RSVP Hadir) -->
+          <div class="ticket-card hidden scroll-animate" data-animation="slide-right" id="rsvp-ticket-card">
+            <div class="ticket-header">
+              <div class="ticket-decor"></div>
+              <h3>GUEST PASS</h3>
+              <p>Undangan Pernikahan Redho & Mitha</p>
+            </div>
+            <div class="ticket-body">
+              <div class="ticket-info">
+                <p class="ticket-label">NAMA TAMU</p>
+                <p id="ticket-guest-name" class="ticket-val">Budi Setiawan</p>
+              </div>
+              <div class="ticket-info-grid">
+                <div class="ticket-info">
+                  <p class="ticket-label">KEHADIRAN</p>
+                  <p id="ticket-guest-status" class="ticket-val text-success">HADIR</p>
+                </div>
+                <div class="ticket-info">
+                  <p class="ticket-label">JUMLAH TAMU</p>
+                  <p id="ticket-guest-count" class="ticket-val">1 Orang</p>
+                </div>
+              </div>
+              
+              <!-- QR Code Ticket -->
+              <div class="ticket-qr-wrapper">
+                <p class="qr-description">Tunjukkan QR Code ini di gerbang masuk lokasi acara</p>
+                <div class="qr-code-box">
+                  <img id="ticket-qr-img" src="" alt="Dynamic RSVP Ticket QR Code">
+                </div>
+                <p id="ticket-id" class="ticket-id">PASS-124859</p>
+              </div>
+            </div>
+            <div class="ticket-footer">
+              <button id="btn-share-wa" class="btn-wa">
+                <i class="fab fa-whatsapp"></i> Bagikan Ke WhatsApp Pengantin
+              </button>
+              <button id="btn-reset-rsvp" class="btn-reset">
+                <i class="fas fa-redo"></i> Ubah RSVP
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 10. GUEST BOOK (Daftar Ucapan & Doa Tamu) -->
+        <div class="guestbook-container scroll-animate" data-animation="fade-in-up">
+          <h3 class="guestbook-title"><i class="far fa-comments"></i> Buku Ucapan & Doa</h3>
+          <div class="guestbook-feed" id="guestbook-feed">
+            <!-- Messages are loaded dynamically from JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. DIGITAL ENVELOPE / KADO DIGITAL -->
+    <section id="gift" class="gift-section section-padding text-center">
+      <div class="container">
+        <div class="section-header scroll-animate" data-animation="fade-in-up">
+          <h2 class="section-title-cursive">Kado Digital</h2>
+          <p class="section-subtitle">Doa restu Anda adalah karunia terindah, namun jika ingin memberikan tanda kasih secara digital, Anda dapat menggunakan opsi di bawah ini</p>
+        </div>
+        
+        <div class="gift-grid">
+          <!-- Bank Card 1 -->
+          <div class="gift-card scroll-animate" data-animation="slide-left">
+            <div class="bank-icon"><i class="fas fa-university"></i></div>
+            <h3 class="bank-name">Bank BRI</h3>
+            <p class="account-number">5737 0102 6216 536</p>
+            <p class="account-holder">a.n. Redho Ilhamdi</p>
+            <button class="btn-copy btn-secondary" data-copy="573701026216536">
+              <i class="far fa-copy"></i> Salin No. Rekening
+            </button>
+          </div>
+
+          <!-- Bank Card 2 / QRIS -->
+          <div class="gift-card scroll-animate" data-animation="slide-right">
+            <div class="bank-icon"><i class="fas fa-qrcode"></i></div>
+            <h3 class="bank-name">Scan QRIS (Amplop Cashless)</h3>
+            <div class="qris-img-box">
+              <img src="assets/qris.png" alt="QRIS Payment Code" class="qris-img">
+            </div>
+            <p class="account-holder">a.n. Pernikahan Redho & Mitha</p>
+            <p class="qris-sub">Mendukung semua e-wallet (GoPay, OVO, Dana, LinkAja) & M-Banking</p>
+          </div>
+        </div>
+
+        <div class="gift-address scroll-animate" data-animation="fade-in-up">
+          <div class="address-icon"><i class="fas fa-gift"></i></div>
+          <h3>Kirim Kado Fisik</h3>
+          <p class="address-text">Kos Putra Pak Musodik, Sukarame, Bandar Lampung</p>
+          <button class="btn-copy btn-secondary" data-copy="Kos Putra Pak Musodik, Sukarame, Bandar Lampung">
+            <i class="far fa-copy"></i> Salin Alamat Pengiriman
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12. FOOTER SECTION -->
+    <footer class="footer text-center section-padding">
+      <div class="container scroll-animate" data-animation="fade-in-up">
+        <h2 class="footer-title">Redho & Mitha</h2>
+        <p class="footer-msg">Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu.</p>
+        <p class="footer-closing">Sampai jumpa di hari bahagia kami!</p>
+        <div class="footer-divider"></div>
+        <p class="footer-credit">Created with ❤️ by <a href="#" class="credit-link">Antigravity Design</a>. All rights reserved.</p>
+      </div>
+    </footer>
+
+  </main>
+
+
+
+  <!-- Custom Javascript -->
+  <script src="script.js"></script>
+</body>
+</html>

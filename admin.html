@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard & QR Scanner - Redho & Mitha</title>
+  
+  <!-- Google Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Same CSS variables but styled as a clean management dashboard -->
+  <style>
+    :root {
+      --bg-primary: #FAF8F5;
+      --bg-secondary: #F3EFE9;
+      --text-primary: #2C2925;
+      --text-secondary: #5E5851;
+      --color-gold: #C09A67;
+      --color-gold-dark: #A47D4C;
+      --color-gold-light: #E6DCD0;
+      
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      
+      --color-success: #2e7d32;
+      --color-warning: #c62828;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-secondary);
+      color: var(--text-primary);
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    header {
+      background-color: var(--bg-primary);
+      padding: 24px;
+      border-radius: var(--radius-md);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+      border: 1px solid var(--color-gold-light);
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .header-title h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--text-primary);
+    }
+    
+    .header-title p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background-color: var(--bg-primary);
+      padding: 20px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-gold-light);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--color-gold-dark);
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    /* Main Area Layout */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background-color: var(--bg-primary);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-gold-light);
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid var(--bg-secondary);
+      padding-bottom: 12px;
+    }
+
+    /* QR Scanner Box */
+    #reader {
+      width: 100%;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 2px dashed var(--color-gold-light) !important;
+      background-color: #000000;
+    }
+
+    #reader__scan_region video {
+      object-fit: cover !important;
+    }
+
+    .scanner-controls {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .btn-action {
+      background-color: var(--color-gold);
+      color: #FFFFFF;
+      border: none;
+      padding: 10px 20px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 0.85rem;
+      transition: all 0.3s;
+    }
+
+    .btn-action:hover {
+      background-color: var(--color-gold-dark);
+    }
+
+    .btn-danger {
+      background-color: var(--color-warning);
+      color: #FFFFFF;
+    }
+    
+    .btn-danger:hover {
+      background-color: #a81c1c;
+    }
+
+    /* Guest Check-in List */
+    .guest-list {
+      max-height: 400px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .guest-item {
+      padding: 12px 16px;
+      background-color: var(--bg-secondary);
+      border-radius: var(--radius-sm);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.88rem;
+    }
+
+    .guest-info h4 {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .guest-info p {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    .checkin-badge {
+      background-color: var(--color-success);
+      color: #FFFFFF;
+      font-size: 0.7rem;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    /* Checkin Modal Notification */
+    .scan-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(44, 41, 37, 0.8);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(8px);
+    }
+
+    .modal-content {
+      background-color: var(--bg-primary);
+      width: 90%;
+      max-width: 400px;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--color-gold);
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+      position: relative;
+      animation: zoomIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: rgba(46, 125, 50, 0.1);
+      color: var(--color-success);
+      font-size: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    .modal-icon.warning {
+      background-color: rgba(198, 40, 40, 0.1);
+      color: var(--color-warning);
+    }
+
+    .modal-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .modal-guest-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--color-gold-dark);
+      margin-bottom: 6px;
+    }
+
+    .modal-details {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+
+    .modal-btn {
+      background-color: var(--text-primary);
+      color: #FFFFFF;
+      border: none;
+      padding: 12px 30px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 0.9rem;
+      width: 100%;
+    }
+
+    .modal-btn:hover {
+      background-color: var(--text-secondary);
+    }
+  </style>
+
+  <!-- HTML5 QR Code Scanner Library -->
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+</head>
+<body>
+
+  <div class="container">
+    
+    <header>
+      <div class="header-title">
+        <h1>Dashboard Meja Penerima Tamu</h1>
+        <p>Pernikahan Redho & Mitha - Sistem Validasi Tamu QR Code</p>
+      </div>
+      <a href="index.html" class="btn-action" style="background-color: var(--text-primary);">
+        <i class="fas fa-arrow-left"></i> Lihat Undangan
+      </a>
+    </header>
+
+    <!-- Stats Dashboard -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div id="stat-rsvp" class="stat-number">0</div>
+        <div class="stat-label">Total Konfirmasi RSVP</div>
+      </div>
+      <div class="stat-card">
+        <div id="stat-checkin" class="stat-number">0</div>
+        <div class="stat-label">Tamu Telah Hadir (Scan)</div>
+      </div>
+      <div class="stat-card">
+        <div id="stat-seats" class="stat-number">0</div>
+        <div class="stat-label">Total Pax Kehadiran</div>
+      </div>
+    </div>
+
+    <!-- Main Scanner Layout -->
+    <div class="main-grid">
+      
+      <!-- Scanner Card -->
+      <div class="card">
+        <div class="card-title">
+          <i class="fas fa-qrcode" style="color: var(--color-gold);"></i>
+          <span>Pindai QR Code Tiket Tamu</span>
+        </div>
+        
+        <div id="reader"></div>
+        
+        <div class="scanner-controls">
+          <button id="btn-start" class="btn-action"><i class="fas fa-camera"></i> Mulai Kamera</button>
+          <button id="btn-stop" class="btn-action btn-danger"><i class="fas fa-video-slash"></i> Matikan Kamera</button>
+        </div>
+      </div>
+
+      <!-- Checked-in List Card -->
+      <div class="card">
+        <div class="card-title">
+          <i class="fas fa-user-check" style="color: var(--color-success);"></i>
+          <span>Daftar Kehadiran Terbaru</span>
+        </div>
+        
+        <div class="guest-list" id="checkin-list">
+          <!-- Dynamically populated check-ins -->
+          <div style="text-align: center; color: var(--text-secondary); font-size: 0.85rem; padding: 40px 0;">
+            Belum ada tamu yang check-in menggunakan QR code.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Scan Confirmation Modal -->
+  <div class="scan-modal" id="scan-modal">
+    <div class="modal-content">
+      <div class="modal-icon" id="modal-icon">
+        <i class="fas fa-check"></i>
+      </div>
+      <h2 class="modal-title" id="modal-status-title">CHECK-IN BERHASIL</h2>
+      <h3 class="modal-guest-name" id="modal-name">Nama Tamu</h3>
+      <p class="modal-details" id="modal-desc">PASS-124859 • 2 Orang</p>
+      <button class="modal-btn" id="modal-close-btn">Selesai & Lanjutkan</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      
+      const html5QrcodeScanner = new Html5Qrcode("reader");
+      let scannerRunning = false;
+
+      // DOM Elements
+      const statRsvp = document.getElementById("stat-rsvp");
+      const statCheckin = document.getElementById("stat-checkin");
+      const statSeats = document.getElementById("stat-seats");
+      const checkinList = document.getElementById("checkin-list");
+      const btnStart = document.getElementById("btn-start");
+      const btnStop = document.getElementById("btn-stop");
+      
+      // Modal Elements
+      const scanModal = document.getElementById("scan-modal");
+      const modalIcon = document.getElementById("modal-icon");
+      const modalStatusTitle = document.getElementById("modal-status-title");
+      const modalName = document.getElementById("modal-name");
+      const modalDesc = document.getElementById("modal-desc");
+      const modalCloseBtn = document.getElementById("modal-close-btn");
+
+      // Synth Sound Generator (Web Audio API)
+      function playBeep(type) {
+        try {
+          const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          const oscillator = audioCtx.createOscillator();
+          const gainNode = audioCtx.createGain();
+          
+          oscillator.connect(gainNode);
+          gainNode.connect(audioCtx.destination);
+          
+          if (type === 'success') {
+            // Success chime: high pitch double beep
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(880, audioCtx.currentTime); // A5
+            gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + 0.1);
+            
+            setTimeout(() => {
+              const osc2 = audioCtx.createOscillator();
+              const gain2 = audioCtx.createGain();
+              osc2.connect(gain2);
+              gain2.connect(audioCtx.destination);
+              osc2.type = 'sine';
+              osc2.frequency.setValueAtTime(1200, audioCtx.currentTime); // D6
+              gain2.gain.setValueAtTime(0.1, audioCtx.currentTime);
+              osc2.start();
+              osc2.stop(audioCtx.currentTime + 0.15);
+            }, 120);
+          } else {
+            // Error buzz: low tone
+            oscillator.type = 'sawtooth';
+            oscillator.frequency.setValueAtTime(150, audioCtx.currentTime);
+            gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + 0.3);
+          }
+        } catch (e) {
+          console.log("Audio play blocked/failed: ", e);
+        }
+      }
+
+      /* ==========================================
+         DATABASE MANAGEMENT (LocalStorage)
+         ========================================== */
+      function loadStats() {
+        // Read RSVP count from guestbook
+        const storedWishes = localStorage.getItem("wedding_wishes");
+        const wishes = storedWishes ? JSON.parse(storedWishes) : [];
+        const rsvpCount = wishes.length;
+        statRsvp.textContent = rsvpCount;
+
+        // Read Checkins
+        const storedCheckins = localStorage.getItem("wedding_checkins");
+        const checkins = storedCheckins ? JSON.parse(storedCheckins) : [];
+        
+        statCheckin.textContent = checkins.length;
+
+        // Calculate total seats of checked in guests
+        let totalPax = 0;
+        checkins.forEach(c => {
+          totalPax += parseInt(c.guests || 1);
+        });
+        statSeats.textContent = totalPax;
+
+        // Render check-in list
+        renderCheckins(checkins);
+      }
+
+      function renderCheckins(checkins) {
+        if (checkins.length === 0) {
+          checkinList.innerHTML = `
+            <div style="text-align: center; color: var(--text-secondary); font-size: 0.85rem; padding: 40px 0;">
+              Belum ada tamu yang check-in menggunakan QR code.
+            </div>
+          `;
+          return;
+        }
+
+        checkinList.innerHTML = "";
+        // Show newest check-ins first
+        checkins.slice().reverse().forEach(guest => {
+          const formattedTime = new Date(guest.timestamp).toLocaleTimeString('id-ID', {
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+          const itemHTML = `
+            <div class="guest-item">
+              <div class="guest-info">
+                <h4>${guest.name}</h4>
+                <p>${guest.id} • ${guest.guests} Pax • ${formattedTime} WIB</p>
+              </div>
+              <span class="checkin-badge">Hadir</span>
+            </div>
+          `;
+          checkinList.insertAdjacentHTML("beforeend", itemHTML);
+        });
+      }
+
+      function handleSuccessfulScan(decodedText) {
+        try {
+          // Parse QR code content
+          const guestData = JSON.parse(decodedText);
+          
+          if (!guestData.id || !guestData.name) {
+            throw new Error("Invalid QR format");
+          }
+
+          // Get existing check-ins
+          const storedCheckins = localStorage.getItem("wedding_checkins");
+          let checkins = storedCheckins ? JSON.parse(storedCheckins) : [];
+
+          // Check if guest is already checked in
+          const alreadyCheckedIn = checkins.some(c => c.id === guestData.id);
+
+          if (alreadyCheckedIn) {
+            // Show duplicate alert modal
+            playBeep('error');
+            showModal(false, guestData.name, `${guestData.id} • ${guestData.guests} Orang`, "Tamu Sudah Check-in Sebelumnya!");
+          } else {
+            // Perform check-in
+            const checkinRecord = {
+              id: guestData.id,
+              name: guestData.name,
+              guests: guestData.guests || 1,
+              timestamp: new Date().toISOString()
+            };
+            checkins.push(checkinRecord);
+            localStorage.setItem("wedding_checkins", JSON.stringify(checkins));
+            
+            // Success sound & modal
+            playBeep('success');
+            showModal(true, guestData.name, `${guestData.id} • ${guestData.guests} Orang`, "CHECK-IN BERHASIL");
+            
+            // Reload statistics
+            loadStats();
+          }
+
+        } catch (e) {
+          console.error("QR Code parsing failed: ", e);
+          playBeep('error');
+          // If qr code contains standard string (not JSON), treat it as a guest name check-in
+          const fallbackName = decodedText.substring(0, 30);
+          showModal(false, fallbackName, "Format Tiket Tidak Valid", "SCAN GAGAL");
+        }
+      }
+
+      function showModal(isSuccess, name, desc, title) {
+        modalName.textContent = name;
+        modalDesc.textContent = desc;
+        modalStatusTitle.textContent = title;
+
+        if (isSuccess) {
+          modalIcon.className = "modal-icon";
+          modalIcon.innerHTML = `<i class="fas fa-check"></i>`;
+          modalStatusTitle.style.color = "var(--color-success)";
+        } else {
+          modalIcon.className = "modal-icon warning";
+          modalIcon.innerHTML = `<i class="fas fa-exclamation-triangle"></i>`;
+          modalStatusTitle.style.color = "var(--color-warning)";
+        }
+
+        scanModal.style.display = "flex";
+        
+        // Pause scanner while modal is showing
+        if (scannerRunning) {
+          html5QrcodeScanner.pause();
+        }
+      }
+
+      modalCloseBtn.addEventListener("click", function () {
+        scanModal.style.display = "none";
+        // Resume scanner scanning
+        if (scannerRunning) {
+          html5QrcodeScanner.resume();
+        }
+      });
+
+      /* ==========================================
+         CAMERA CONTROL
+         ========================================== */
+      function startScanner() {
+        if (scannerRunning) return;
+
+        const config = { 
+          fps: 10, 
+          qrbox: { width: 250, height: 250 },
+          aspectRatio: 1.0 
+        };
+
+        // Start scanning with back camera
+        html5QrcodeScanner.start(
+          { facingMode: "environment" }, 
+          config, 
+          (decodedText, decodedResult) => {
+            handleSuccessfulScan(decodedText);
+          },
+          (errorMessage) => {
+            // Silent failure for framing matches
+          }
+        ).then(() => {
+          scannerRunning = true;
+          btnStart.style.display = "none";
+          btnStop.style.display = "inline-flex";
+        }).catch(err => {
+          alert("Gagal mengakses kamera: " + err);
+        });
+      }
+
+      function stopScanner() {
+        if (!scannerRunning) return;
+
+        html5QrcodeScanner.stop().then(() => {
+          scannerRunning = false;
+          btnStart.style.display = "inline-flex";
+          btnStop.style.display = "none";
+        }).catch(err => {
+          console.error("Failed to stop scanner: ", err);
+        });
+      }
+
+      btnStart.addEventListener("click", startScanner);
+      btnStop.addEventListener("click", stopScanner);
+      
+      // Auto-stop scanner if page closes
+      window.addEventListener("beforeunload", stopScanner);
+
+      // Load initial dashboard data
+      loadStats();
+      
+      // Set initial button states
+      btnStop.style.display = "none";
+    });
+  </script>
+</body>
+</html>
