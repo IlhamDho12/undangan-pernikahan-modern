@@ -17,6 +17,9 @@ document.addEventListener("DOMContentLoaded", function () {
     guestNameElement.textContent = "Tamu Undangan";
   }
 
+  // Initialize 3D floating leaves effect
+  initFloatingLeaves();
+
   /* ==========================================
      2. COVER OVERLAY & AUTOPLAY AUDIO BYPASS
      ========================================== */
@@ -401,5 +404,45 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Set initial trigger scroll animations fallback
   triggerScrollAnimations();
+
+  /* ==========================================
+     11. 3D FLOATING LEAVES EFFECT
+     ========================================== */
+  function initFloatingLeaves() {
+    const container = document.createElement("div");
+    container.id = "particles-container";
+    document.body.appendChild(container);
+
+    const leafSVG = `
+      <svg viewBox="0 0 100 100" width="100%" height="100%">
+        <path d="M10,80 Q40,60 80,10 Q60,40 10,80" fill="#C09A67" opacity="0.6"/>
+      </svg>
+    `;
+
+    const leafCount = 15;
+    for (let i = 0; i < leafCount; i++) {
+      const leaf = document.createElement("div");
+      leaf.className = "floating-leaf";
+      leaf.innerHTML = leafSVG;
+      
+      // Randomize initial positions & 3D animation offsets
+      const startX = Math.random() * 100; // left position in %
+      const size = 15 + Math.random() * 20; // width/height in px
+      const delay = Math.random() * 12; // animation delay in seconds
+      const duration = 8 + Math.random() * 8; // animation duration in seconds
+      const driftX = (Math.random() - 0.5) * 200; // horizontal drift in px
+      const driftZ = (Math.random() - 0.5) * 300; // depth drift in px
+
+      leaf.style.left = `${startX}%`;
+      leaf.style.width = `${size}px`;
+      leaf.style.height = `${size}px`;
+      leaf.style.animationDelay = `${delay}s`;
+      leaf.style.animationDuration = `${duration}s`;
+      leaf.style.setProperty("--drift-x", `${driftX}px`);
+      leaf.style.setProperty("--drift-z", `${driftZ}px`);
+
+      container.appendChild(leaf);
+    }
+  }
 
 });

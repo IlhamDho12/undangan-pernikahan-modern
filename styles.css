@@ -1,23 +1,23 @@
 /* ==========================================
-   SYSTEM DESIGN: SILVER ELEGANT
+   SYSTEM DESIGN: GOLD ELEGANT
    ========================================== */
 
 :root {
   /* Color Palette */
-  --bg-primary: #ECEFF2; /* Cool silver base background */
-  --bg-secondary: #D4DBE2; /* Darker silver-grey for section contrasts */
-  --text-primary: #1E2229;
-  --text-secondary: #505663;
-  --color-gold: #8A95A5; /* Premium Silver */
-  --color-gold-dark: #646E7C; /* Dark Silver */
-  --color-gold-light: #C5CCD6; /* Light Silver */
-  --color-gold-glow: rgba(138, 149, 165, 0.15);
+  --bg-primary: #FAF8F5; /* Warm ivory base background */
+  --bg-secondary: #F3EFE9; /* Soft cream secondary background */
+  --text-primary: #2C2925; /* Dark bronze charcoal */
+  --text-secondary: #5E5851; /* Warm brown-grey */
+  --color-gold: #C09A67; /* Champagne Gold */
+  --color-gold-dark: #A47D4C; /* Dark Gold */
+  --color-gold-light: #E6DCD0; /* Light Gold */
+  --color-gold-glow: rgba(192, 154, 103, 0.15);
   
   /* Utilities */
-  --card-shadow: 0 10px 30px rgba(30, 34, 41, 0.04);
-  --glass-shadow: 0 8px 32px 0 rgba(30, 34, 41, 0.08);
-  --glass-bg: rgba(255, 255, 255, 0.85);
-  --glass-border: rgba(138, 149, 165, 0.18);
+  --card-shadow: 0 10px 30px rgba(44, 41, 37, 0.04);
+  --glass-shadow: 0 8px 32px 0 rgba(44, 41, 37, 0.08);
+  --glass-bg: rgba(255, 255, 255, 0.9);
+  --glass-border: rgba(192, 154, 103, 0.18);
   --radius-sm: 8px;
   --radius-md: 16px;
   --radius-lg: 24px;
@@ -521,7 +521,7 @@ p {
 .couple-card:hover {
   transform: translateY(-8px) scale(1.02);
   border-color: var(--color-gold);
-  box-shadow: 0 20px 40px rgba(138, 149, 165, 0.25);
+  box-shadow: 0 20px 40px rgba(192, 154, 103, 0.2);
 }
 
 .avatar-wrapper {
@@ -708,7 +708,7 @@ p {
 .event-card:hover {
   transform: translateY(-8px) scale(1.02);
   border-color: var(--color-gold);
-  box-shadow: 0 20px 40px rgba(138, 149, 165, 0.25);
+  box-shadow: 0 20px 40px rgba(192, 154, 103, 0.2);
 }
 
 .event-badge {
@@ -1077,7 +1077,7 @@ p {
 
 .rsvp-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 15px 35px rgba(138, 149, 165, 0.18);
+  box-shadow: 0 15px 35px rgba(192, 154, 103, 0.15);
 }
 
 .rsvp-form {
@@ -1135,7 +1135,7 @@ p {
 
 .ticket-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 15px 35px rgba(138, 149, 165, 0.2);
+  box-shadow: 0 15px 35px rgba(192, 154, 103, 0.15);
 }
 
 .ticket-card.hidden {
@@ -1430,7 +1430,7 @@ p {
 .gift-card:hover {
   transform: translateY(-8px) scale(1.02);
   border-color: var(--color-gold);
-  box-shadow: 0 20px 40px rgba(138, 149, 165, 0.25);
+  box-shadow: 0 20px 40px rgba(192, 154, 103, 0.2);
 }
 
 .bank-icon {
@@ -1510,7 +1510,7 @@ p {
 
 .gift-address:hover {
   transform: translateY(-4px);
-  box-shadow: 0 15px 35px rgba(138, 149, 165, 0.18);
+  box-shadow: 0 15px 35px rgba(192, 154, 103, 0.15);
 }
 
 .address-icon {
@@ -1685,4 +1685,45 @@ p {
 
 .animate-bounce {
   animation: bounce 2s infinite, pulse-glow 1.5s infinite alternate;
+}
+
+/* 3D Floating Leaves / Particles */
+#particles-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 99;
+  overflow: hidden;
+  perspective: 1000px;
+}
+
+.floating-leaf {
+  position: absolute;
+  bottom: -50px;
+  width: 25px;
+  height: 25px;
+  opacity: 0;
+  pointer-events: none;
+  transform-style: preserve-3d;
+  animation: float3d 12s linear infinite;
+}
+
+@keyframes float3d {
+  0% {
+    transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.7;
+  }
+  90% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate3d(var(--drift-x), -105vh, var(--drift-z)) rotateX(360deg) rotateY(720deg) rotateZ(360deg);
+    opacity: 0;
+  }
 }
