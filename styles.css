@@ -4,8 +4,8 @@
 
 :root {
   /* Color Palette */
-  --bg-primary: #F5F7FA;
-  --bg-secondary: #E4E7EB;
+  --bg-primary: #ECEFF2; /* Cool silver base background */
+  --bg-secondary: #D4DBE2; /* Darker silver-grey for section contrasts */
   --text-primary: #1E2229;
   --text-secondary: #505663;
   --color-gold: #8A95A5; /* Premium Silver */
@@ -16,7 +16,7 @@
   /* Utilities */
   --card-shadow: 0 10px 30px rgba(30, 34, 41, 0.04);
   --glass-shadow: 0 8px 32px 0 rgba(30, 34, 41, 0.08);
-  --glass-bg: rgba(245, 247, 250, 0.85);
+  --glass-bg: rgba(255, 255, 255, 0.85);
   --glass-border: rgba(138, 149, 165, 0.18);
   --radius-sm: 8px;
   --radius-md: 16px;
@@ -510,7 +510,7 @@ p {
 .couple-card {
   flex: 1;
   max-width: 380px;
-  background-color: var(--bg-primary);
+  background-color: #FFFFFF;
   border: 1px solid var(--color-gold-light);
   border-radius: var(--radius-md);
   padding: 40px 30px;
@@ -519,9 +519,9 @@ p {
 }
 
 .couple-card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-8px) scale(1.02);
   border-color: var(--color-gold);
-  box-shadow: 0 15px 35px rgba(192, 154, 103, 0.08);
+  box-shadow: 0 20px 40px rgba(138, 149, 165, 0.25);
 }
 
 .avatar-wrapper {
@@ -685,7 +685,7 @@ p {
 .event-card {
   flex: 1;
   max-width: 480px;
-  background-color: var(--bg-primary);
+  background-color: #FFFFFF;
   border: 1px solid var(--color-gold-light);
   border-radius: var(--radius-md);
   padding: 50px 40px;
@@ -706,9 +706,9 @@ p {
 }
 
 .event-card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-8px) scale(1.02);
   border-color: var(--color-gold);
-  box-shadow: 0 15px 35px rgba(192, 154, 103, 0.08);
+  box-shadow: 0 20px 40px rgba(138, 149, 165, 0.25);
 }
 
 .event-badge {
@@ -1067,12 +1067,17 @@ p {
 }
 
 .rsvp-card {
-  background-color: var(--bg-primary);
+  background-color: #FFFFFF;
   border: 1px solid var(--color-gold-light);
   border-radius: var(--radius-md);
   padding: 40px 30px;
   box-shadow: var(--card-shadow);
-  transition: opacity 0.5s ease;
+  transition: var(--transition-smooth);
+}
+
+.rsvp-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px rgba(138, 149, 165, 0.18);
 }
 
 .rsvp-form {
@@ -1118,13 +1123,19 @@ p {
 
 /* ADVANCED TICKET (GUEST PASS) DESIGN */
 .ticket-card {
-  background-color: var(--bg-primary);
+  background-color: #FFFFFF;
   border: 2px solid var(--color-gold);
   border-radius: var(--radius-md);
   box-shadow: var(--glass-shadow);
   overflow: hidden;
   position: relative;
   animation: zoom-in 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: var(--transition-smooth);
+}
+
+.ticket-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px rgba(138, 149, 165, 0.2);
 }
 
 .ticket-card.hidden {
@@ -1408,7 +1419,7 @@ p {
 .gift-card {
   flex: 1;
   max-width: 380px;
-  background-color: var(--bg-primary);
+  background-color: #FFFFFF;
   border: 1px solid var(--color-gold-light);
   border-radius: var(--radius-md);
   padding: 40px 30px;
@@ -1417,14 +1428,28 @@ p {
 }
 
 .gift-card:hover {
+  transform: translateY(-8px) scale(1.02);
   border-color: var(--color-gold);
-  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(138, 149, 165, 0.25);
 }
 
 .bank-icon {
   font-size: 2rem;
   color: var(--color-gold);
   margin-bottom: 20px;
+}
+
+.bank-logo-wrapper {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 38px;
+}
+
+.bank-logo-svg {
+  display: block;
+  filter: drop-shadow(0 2px 5px rgba(0, 82, 156, 0.15));
 }
 
 .bank-name {
@@ -1475,11 +1500,17 @@ p {
 .gift-address {
   max-width: 500px;
   margin: 50px auto 0;
-  background-color: var(--bg-secondary);
+  background-color: #FFFFFF;
   border: 1px solid var(--color-gold-light);
   border-radius: var(--radius-md);
   padding: 30px;
   box-shadow: var(--card-shadow);
+  transition: var(--transition-smooth);
+}
+
+.gift-address:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px rgba(138, 149, 165, 0.18);
 }
 
 .address-icon {
