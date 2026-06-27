@@ -613,18 +613,17 @@
         }
 
         scanModal.style.display = "flex";
-        
-        // Pause scanner while modal is showing
-        if (scannerRunning) {
-          html5QrcodeScanner.pause();
-        }
       }
 
       modalCloseBtn.addEventListener("click", function () {
         scanModal.style.display = "none";
         // Resume scanner scanning
         if (scannerRunning) {
-          html5QrcodeScanner.resume();
+          try {
+            html5QrcodeScanner.resume();
+          } catch (err) {
+            console.warn("Could not resume scanner: ", err);
+          }
         }
       });
 
@@ -645,6 +644,14 @@
           { facingMode: "environment" }, 
           config, 
           (decodedText, decodedResult) => {
+            // Immediately pause scanning to prevent duplicate scans while processing
+            if (scannerRunning) {
+              try {
+                html5QrcodeScanner.pause();
+              } catch (err) {
+                console.warn("Could not pause scanner: ", err);
+              }
+            }
             handleSuccessfulScan(decodedText);
           },
           (errorMessage) => {
