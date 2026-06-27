@@ -265,9 +265,9 @@ p {
   font-family: var(--font-serif);
   font-size: 3.8rem;
   font-weight: 400;
-  color: #FFFFFF;
+  color: #D4B26F; /* Luxurious bright champagne gold */
   margin-bottom: 5px;
-  text-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  text-shadow: 0 4px 15px rgba(0,0,0,0.5);
 }
 
 .cover-date {
@@ -423,8 +423,8 @@ p {
   font-size: 4.8rem;
   font-weight: 400;
   margin-bottom: 15px;
-  color: #FFFFFF; /* Explicitly white for contrast */
-  text-shadow: 0 2px 20px rgba(0,0,0,0.6);
+  color: #D4B26F; /* Luxurious bright champagne gold */
+  text-shadow: 0 4px 20px rgba(0,0,0,0.7);
 }
 
 .hero-date {
@@ -462,7 +462,7 @@ p {
     padding-bottom: 120px;
   }
   .hero-bg {
-    background-position: center 15%; /* Shifts faces down to be fully visible */
+    background-position: center 28%; /* Shifts faces down to be fully visible */
   }
   .hero-names {
     font-size: 3rem; /* slightly smaller to fit screen better */
