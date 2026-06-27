@@ -462,7 +462,7 @@ p {
     padding-bottom: 120px;
   }
   .hero-bg {
-    background-position: center 28%; /* Shifts faces down to be fully visible */
+    background-position: center top; /* Align top of image to top of screen so heads are never cut off */
   }
   .hero-names {
     font-size: 3rem; /* slightly smaller to fit screen better */
