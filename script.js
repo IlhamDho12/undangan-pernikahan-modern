@@ -1,5 +1,19 @@
 document.addEventListener("DOMContentLoaded", function () {
   
+  // Initialize Firebase using user's config (US-Central Region)
+  const firebaseConfig = {
+    apiKey: "AIzaSyBJCRphhOTiLuK8_5HF1F_co9CJrBXGnGs",
+    authDomain: "ilhamdho-downloader.firebaseapp.com",
+    databaseURL: "https://ilhamdho-downloader-default-rtdb.firebaseio.com",
+    projectId: "ilhamdho-downloader",
+    storageBucket: "ilhamdho-downloader.firebasestorage.app",
+    messagingSenderId: "343531450168",
+    appId: "1:343531450168:web:ee1e820fe03f7d70b51bcd",
+    measurementId: "G-GEY66M43CG"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
   /* ==========================================
      1. PARSE GUEST NAME FROM URL PARAMETER
      ========================================== */
@@ -239,11 +253,11 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   /* ==========================================
-     6. LOCAL STORAGE GUEST BOOK (Ucapan & Doa)
+     6. FIREBASE REALTIME GUEST BOOK (Ucapan & Doa)
      ========================================== */
   const guestbookFeed = document.getElementById("guestbook-feed");
 
-  // Initial dummy wishes if localstorage is empty
+  // Initial default wishes to pre-populate if database is empty
   const defaultWishes = [
     {
       name: "Yudi Telok",
@@ -301,28 +315,41 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   ];
 
-  function getWishes() {
-    const stored = localStorage.getItem("wedding_wishes");
-    if (!stored || stored.includes("Redho") || stored.includes("Mitha") || stored.includes("Rian") || stored.includes("Nadine") || stored.includes("Farel") || stored.includes("Amanda")) {
-      localStorage.setItem("wedding_wishes", JSON.stringify(defaultWishes));
-      return defaultWishes;
+  // Reference to wishes path in Firebase Realtime Database
+  const wishesRef = db.ref("wishes");
+
+  // Load and render wishes in real-time
+  wishesRef.on("value", function (snapshot) {
+    const data = snapshot.val();
+    
+    // If database has no wishes, seed with default wishes
+    if (!data) {
+      defaultWishes.forEach(wish => {
+        wishesRef.push(wish);
+      });
+      return;
     }
-    return JSON.parse(stored);
-  }
+
+    // Convert object of wishes to array and sort by timestamp descending
+    const wishes = [];
+    for (const key in data) {
+      wishes.push(data[key]);
+    }
+    wishes.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+    renderWishes(wishes);
+  });
 
   function saveWish(newWish) {
-    const current = getWishes();
-    current.unshift(newWish); // Add new wish to the top
-    localStorage.setItem("wedding_wishes", JSON.stringify(current));
-    renderWishes();
+    // Save to Firebase Realtime Database
+    wishesRef.push(newWish);
   }
 
-  function renderWishes() {
-    const wishes = getWishes();
+  function renderWishes(wishes) {
     guestbookFeed.innerHTML = "";
 
     wishes.forEach(wish => {
-      const firstLetter = wish.name.charAt(0).toUpperCase();
+      const firstLetter = wish.name ? wish.name.charAt(0).toUpperCase() : "?";
       const statusClass = wish.status === "Hadir" ? "status-hadir" : "status-tidak";
       const statusText = wish.status === "Hadir" ? "Hadir" : "Tidak Hadir";
 
@@ -341,9 +368,6 @@ document.addEventListener("DOMContentLoaded", function () {
       guestbookFeed.insertAdjacentHTML("beforeend", itemHTML);
     });
   }
-
-  // Load and display wishes initially
-  renderWishes();
 
   /* ==========================================
      7. COPY REKENING / ALAMAT TO CLIPBOARD + TOAST

@@ -395,8 +395,26 @@
     </div>
   </div>
 
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+
   <script>
     document.addEventListener("DOMContentLoaded", function () {
+      
+      // Initialize Firebase using user's config (US-Central Region)
+      const firebaseConfig = {
+        apiKey: "AIzaSyBJCRphhOTiLuK8_5HF1F_co9CJrBXGnGs",
+        authDomain: "ilhamdho-downloader.firebaseapp.com",
+        databaseURL: "https://ilhamdho-downloader-default-rtdb.firebaseio.com",
+        projectId: "ilhamdho-downloader",
+        storageBucket: "ilhamdho-downloader.firebasestorage.app",
+        messagingSenderId: "343531450168",
+        appId: "1:343531450168:web:ee1e820fe03f7d70b51bcd",
+        measurementId: "G-GEY66M43CG"
+      };
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.database();
       
       const html5QrcodeScanner = new Html5Qrcode("reader");
       let scannerRunning = false;
@@ -460,30 +478,48 @@
       }
 
       /* ==========================================
-         DATABASE MANAGEMENT (LocalStorage)
+         DATABASE MANAGEMENT (Firebase Realtime Database)
          ========================================== */
-      function loadStats() {
-        // Read RSVP count from guestbook
-        const storedWishes = localStorage.getItem("wedding_wishes");
-        const wishes = storedWishes ? JSON.parse(storedWishes) : [];
-        const rsvpCount = wishes.length;
-        statRsvp.textContent = rsvpCount;
+      const checkinsRef = db.ref("checkins");
+      const wishesRef = db.ref("wishes");
 
-        // Read Checkins
-        const storedCheckins = localStorage.getItem("wedding_checkins");
-        const checkins = storedCheckins ? JSON.parse(storedCheckins) : [];
+      // Global checkins list for validation
+      let globalCheckins = [];
+
+      // Listen to check-ins in real-time
+      checkinsRef.on("value", function (snapshot) {
+        const data = snapshot.val();
+        globalCheckins = [];
         
-        statCheckin.textContent = checkins.length;
+        if (data) {
+          for (const key in data) {
+            globalCheckins.push(data[key]);
+          }
+        }
+        
+        // Recalculate and render stats
+        updateStats();
+      });
+
+      // Listen to wishes (RSVP) count in real-time
+      wishesRef.on("value", function (snapshot) {
+        const data = snapshot.val();
+        const rsvpCount = data ? Object.keys(data).length : 0;
+        statRsvp.textContent = rsvpCount;
+      });
+
+      function updateStats() {
+        statCheckin.textContent = globalCheckins.length;
 
         // Calculate total seats of checked in guests
         let totalPax = 0;
-        checkins.forEach(c => {
+        globalCheckins.forEach(c => {
           totalPax += parseInt(c.guests || 1);
         });
         statSeats.textContent = totalPax;
 
         // Render check-in list
-        renderCheckins(checkins);
+        renderCheckins(globalCheckins);
       }
 
       function renderCheckins(checkins) {
@@ -497,8 +533,10 @@
         }
 
         checkinList.innerHTML = "";
-        // Show newest check-ins first
-        checkins.slice().reverse().forEach(guest => {
+        // Show newest check-ins first (by timestamp descending)
+        const sortedCheckins = checkins.slice().sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+        
+        sortedCheckins.reverse().forEach(guest => {
           const formattedTime = new Date(guest.timestamp).toLocaleTimeString('id-ID', {
             hour: '2-digit',
             minute: '2-digit'
@@ -525,34 +563,29 @@
             throw new Error("Invalid QR format");
           }
 
-          // Get existing check-ins
-          const storedCheckins = localStorage.getItem("wedding_checkins");
-          let checkins = storedCheckins ? JSON.parse(storedCheckins) : [];
-
-          // Check if guest is already checked in
-          const alreadyCheckedIn = checkins.some(c => c.id === guestData.id);
+          // Check if guest is already checked in (validation using global list)
+          const alreadyCheckedIn = globalCheckins.some(c => c.id === guestData.id);
 
           if (alreadyCheckedIn) {
             // Show duplicate alert modal
             playBeep('error');
             showModal(false, guestData.name, `${guestData.id} • ${guestData.guests} Orang`, "Tamu Sudah Check-in Sebelumnya!");
           } else {
-            // Perform check-in
+            // Perform check-in by pushing to Firebase Realtime Database
             const checkinRecord = {
               id: guestData.id,
               name: guestData.name,
               guests: guestData.guests || 1,
               timestamp: new Date().toISOString()
             };
-            checkins.push(checkinRecord);
-            localStorage.setItem("wedding_checkins", JSON.stringify(checkins));
             
-            // Success sound & modal
-            playBeep('success');
-            showModal(true, guestData.name, `${guestData.id} • ${guestData.guests} Orang`, "CHECK-IN BERHASIL");
-            
-            // Reload statistics
-            loadStats();
+            checkinsRef.push(checkinRecord).then(() => {
+              // Success sound & modal
+              playBeep('success');
+              showModal(true, guestData.name, `${guestData.id} • ${guestData.guests} Orang`, "CHECK-IN BERHASIL");
+            }).catch(err => {
+              alert("Gagal melakukan check-in ke cloud: " + err);
+            });
           }
 
         } catch (e) {
@@ -644,9 +677,6 @@
       // Auto-stop scanner if page closes
       window.addEventListener("beforeunload", stopScanner);
 
-      // Load initial dashboard data
-      loadStats();
-      
       // Set initial button states
       btnStop.style.display = "none";
     });
