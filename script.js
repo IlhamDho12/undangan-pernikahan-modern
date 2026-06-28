@@ -230,7 +230,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // Setup WhatsApp share content
       btnShareWa.onclick = function () {
         const textMessage = `Halo Alkodri & Jumro, saya ingin mengonfirmasi kehadiran di acara pernikahan kalian.%0A%0A*Nama:* ${encodeURIComponent(name)}%0A*Kehadiran:* Hadir (${guests} Orang)%0A*Kode Tiket:* ${ticketId}%0A*Pesan:* "${encodeURIComponent(message)}"%0A%0A*Sampai jumpa di lokasi acara!*`;
-        window.open(`https://wa.me/6281234567890?text=${textMessage}`, '_blank');
+        window.open(`https://wa.me/6285921658830?text=${textMessage}`, '_blank');
       };
 
       // Setup QR Code download content
