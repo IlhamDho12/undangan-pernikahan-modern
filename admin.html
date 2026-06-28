@@ -430,9 +430,13 @@ Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
       
       <!-- Generated Results -->
       <div id="generated-results-container" style="display: none; margin-top: 24px; border-top: 1px solid var(--color-gold-light); padding-top: 20px;">
-        <h3 style="font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; color: var(--text-primary);">
+        <h3 style="font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; color: var(--text-primary); flex-wrap: wrap; gap: 10px;">
           <span>Hasil Generator Link (0 Tamu)</span>
-          <button id="btn-copy-all" class="btn-action" style="font-size: 0.75rem; padding: 6px 12px; background-color: var(--text-primary); color: #FFFFFF; display: inline-flex; align-items: center; gap: 4px;"><i class="fas fa-copy"></i> Salin Semua Hasil</button>
+          <div style="display: flex; gap: 8px;">
+            <button id="btn-broadcast-seq" class="btn-action" style="font-size: 0.75rem; padding: 6px 12px; background-color: #25d366; color: #FFFFFF; display: inline-flex; align-items: center; gap: 4px; border: none; border-radius: var(--radius-sm); cursor: pointer;"><i class="fab fa-whatsapp"></i> Kirim Beruntun</button>
+            <button id="btn-export-csv" class="btn-action" style="font-size: 0.75rem; padding: 6px 12px; background-color: #0275d8; color: #FFFFFF; display: inline-flex; align-items: center; gap: 4px; border: none; border-radius: var(--radius-sm); cursor: pointer;"><i class="fas fa-file-excel"></i> Unduh CSV Excel</button>
+            <button id="btn-copy-all" class="btn-action" style="font-size: 0.75rem; padding: 6px 12px; background-color: var(--text-primary); color: #FFFFFF; display: inline-flex; align-items: center; gap: 4px; border: none; border-radius: var(--radius-sm); cursor: pointer;"><i class="fas fa-copy"></i> Salin Semua Hasil</button>
+          </div>
         </h3>
         <div style="max-height: 350px; overflow-y: auto; border: 1px solid var(--color-gold-light); border-radius: var(--radius-sm); background: var(--bg-secondary);">
           <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left;">
@@ -463,6 +467,56 @@ Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
       <h3 class="modal-guest-name" id="modal-name">Nama Tamu</h3>
       <p class="modal-details" id="modal-desc">PASS-124859 • 2 Orang</p>
       <button class="modal-btn" id="modal-close-btn">Selesai & Lanjutkan</button>
+    </div>
+  </div>
+
+  <!-- Sequential Broadcast Modal -->
+  <div class="scan-modal" id="broadcast-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center; padding: 20px;">
+    <div class="modal-content" style="width: 100%; max-width: 500px; text-align: left; padding: 30px; border-radius: var(--radius-md); background: #FFFFFF; border: 1px solid var(--color-gold-light); box-shadow: 0 20px 50px rgba(0,0,0,0.15); box-sizing: border-box;">
+      <h2 style="font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; display: flex; align-items: center; gap: 8px;">
+        <i class="fab fa-whatsapp" style="color: #25d366;"></i>
+        <span>Asisten Kirim Beruntun</span>
+      </h2>
+      <p id="broadcast-progress" style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 20px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Tamu 1 dari 10</p>
+      
+      <!-- Progress Bar -->
+      <div style="width: 100%; height: 6px; background-color: var(--bg-secondary); border-radius: 3px; margin-bottom: 20px; overflow: hidden;">
+        <div id="broadcast-progress-bar" style="width: 10%; height: 100%; background-color: var(--color-gold); transition: width 0.3s;"></div>
+      </div>
+
+      <!-- Guest Card Info -->
+      <div style="background-color: var(--bg-primary); border: 1px solid var(--color-gold-light); border-radius: var(--radius-sm); padding: 15px; margin-bottom: 20px;">
+        <div style="margin-bottom: 8px;">
+          <span style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 600; text-transform: uppercase;">Nama Tamu:</span>
+          <h3 id="broadcast-guest-name" style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin: 2px 0 0 0;">Nama Tamu</h3>
+        </div>
+        <div>
+          <span style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 600; text-transform: uppercase;">Nomor HP / WhatsApp:</span>
+          <p id="broadcast-guest-phone" style="font-size: 0.9rem; color: var(--text-primary); margin: 2px 0 0 0; font-weight: 500;">08123456789</p>
+        </div>
+      </div>
+
+      <!-- Message Preview -->
+      <div style="margin-bottom: 24px;">
+        <span style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 6px;">Pratinjau Pesan WA:</span>
+        <div id="broadcast-msg-preview" style="max-height: 120px; overflow-y: auto; border: 1px solid var(--color-gold-light); border-radius: var(--radius-sm); padding: 10px; font-size: 0.8rem; background-color: var(--bg-secondary); white-space: pre-wrap; font-family: inherit; color: var(--text-primary); line-height: 1.4;">Pratinjau pesan WhatsApp...</div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="margin-bottom: 20px;">
+        <button id="btn-broadcast-open-wa" class="btn-action" style="width: 100%; justify-content: center; background-color: #25d366; color: #FFFFFF; font-weight: 600; padding: 12px; border: none; border-radius: var(--radius-sm); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-size: 0.95rem;">
+          <i class="fab fa-whatsapp"></i> Buka & Kirim WhatsApp
+        </button>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; border-top: 1px solid var(--color-gold-light); padding-top: 20px;">
+        <button id="btn-broadcast-prev" class="btn-action" style="justify-content: center; background-color: var(--text-primary); color: #FFFFFF; border: none; border-radius: var(--radius-sm); padding: 10px; font-size: 0.85rem; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;"><i class="fas fa-chevron-left"></i> Sebelumnya</button>
+        <button id="btn-broadcast-next" class="btn-action" style="justify-content: center; background-color: var(--color-gold-dark); color: #FFFFFF; border: none; border-radius: var(--radius-sm); padding: 10px; font-size: 0.85rem; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">Lanjut <i class="fas fa-chevron-right"></i></button>
+      </div>
+      
+      <button id="btn-broadcast-close" style="width: 100%; margin-top: 12px; background: none; border: none; color: var(--color-danger); cursor: pointer; font-size: 0.85rem; font-weight: 600; text-align: center; text-decoration: underline;">
+        Tutup & Batal
+      </button>
     </div>
   </div>
 
@@ -844,6 +898,7 @@ Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
       const btnCopyAll = document.getElementById("btn-copy-all");
 
       let allGeneratedTexts = []; // To hold all copy-paste texts for "Copy All"
+      let generatedGuestsList = []; // Hold list of guests: { name, phone, link, message } for broadcast/export
 
       btnGenerate.addEventListener("click", function () {
         const rawNames = guestNamesInput.value.trim();
@@ -859,6 +914,7 @@ Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
         const lines = rawNames.split(/\r?\n/);
         linksTableBody.innerHTML = "";
         allGeneratedTexts = [];
+        generatedGuestsList = [];
 
         let count = 0;
 
@@ -889,6 +945,13 @@ Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
           // Format WhatsApp message
           let waMessage = template.replace(/\[Nama\]/g, name).replace(/\[Link\]/g, customLink);
           allGeneratedTexts.push(`TAMU: ${name}\nLINK: ${customLink}\nPESAN:\n${waMessage}\n------------------`);
+          
+          generatedGuestsList.push({
+            name: name,
+            phone: phone,
+            link: customLink,
+            message: waMessage
+          });
 
           // Table row markup
           const rowHTML = `
@@ -946,6 +1009,131 @@ Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
         navigator.clipboard.writeText(allText).then(() => {
           showToast("Semua link & pesan disalin!");
         });
+      });
+
+      /* ==========================================
+         OPTIONAL BROADCAST & EXPORT LOGIC
+         ========================================== */
+
+      // OPSI A: Kirim Beruntun (Sequential Broadcast)
+      const btnBroadcastSeq = document.getElementById("btn-broadcast-seq");
+      const broadcastModal = document.getElementById("broadcast-modal");
+      const broadcastProgress = document.getElementById("broadcast-progress");
+      const broadcastProgressBar = document.getElementById("broadcast-progress-bar");
+      const broadcastGuestName = document.getElementById("broadcast-guest-name");
+      const broadcastGuestPhone = document.getElementById("broadcast-guest-phone");
+      const broadcastMsgPreview = document.getElementById("broadcast-msg-preview");
+      const btnBroadcastOpenWa = document.getElementById("btn-broadcast-open-wa");
+      const btnBroadcastPrev = document.getElementById("btn-broadcast-prev");
+      const btnBroadcastNext = document.getElementById("btn-broadcast-next");
+      const btnBroadcastClose = document.getElementById("btn-broadcast-close");
+
+      let currentBroadcastIndex = 0;
+
+      // Open Broadcast modal
+      btnBroadcastSeq.addEventListener("click", function () {
+        if (generatedGuestsList.length === 0) {
+          alert("Silakan generate link tamu terlebih dahulu!");
+          return;
+        }
+        currentBroadcastIndex = 0;
+        updateBroadcastModal();
+        broadcastModal.style.display = "flex";
+      });
+
+      // Update contents in the modal based on current index
+      function updateBroadcastModal() {
+        const guest = generatedGuestsList[currentBroadcastIndex];
+        const total = generatedGuestsList.length;
+
+        // Progress Text
+        broadcastProgress.textContent = `Tamu ${currentBroadcastIndex + 1} dari ${total}`;
+        
+        // Progress Bar
+        const percent = ((currentBroadcastIndex + 1) / total) * 100;
+        broadcastProgressBar.style.width = `${percent}%`;
+
+        // Guest info
+        broadcastGuestName.textContent = guest.name;
+        broadcastGuestPhone.textContent = guest.phone ? guest.phone : "(Tidak ada nomor HP)";
+
+        // Message preview
+        broadcastMsgPreview.textContent = guest.message;
+
+        // Enable/Disable navigation buttons
+        btnBroadcastPrev.disabled = currentBroadcastIndex === 0;
+        btnBroadcastPrev.style.opacity = currentBroadcastIndex === 0 ? "0.5" : "1";
+        btnBroadcastPrev.style.cursor = currentBroadcastIndex === 0 ? "not-allowed" : "pointer";
+
+        btnBroadcastNext.disabled = currentBroadcastIndex === total - 1;
+        btnBroadcastNext.style.opacity = currentBroadcastIndex === total - 1 ? "0.5" : "1";
+        btnBroadcastNext.style.cursor = currentBroadcastIndex === total - 1 ? "not-allowed" : "pointer";
+        
+        // Update WhatsApp open click handler
+        btnBroadcastOpenWa.onclick = function () {
+          const encodedMsg = encodeURIComponent(guest.message);
+          if (guest.phone) {
+            window.open(`https://wa.me/${guest.phone}?text=${encodedMsg}`, "_blank");
+          } else {
+            window.open(`https://api.whatsapp.com/send?text=${encodedMsg}`, "_blank");
+          }
+        };
+      }
+
+      // Next guest
+      btnBroadcastNext.addEventListener("click", function () {
+        if (currentBroadcastIndex < generatedGuestsList.length - 1) {
+          currentBroadcastIndex++;
+          updateBroadcastModal();
+        }
+      });
+
+      // Previous guest
+      btnBroadcastPrev.addEventListener("click", function () {
+        if (currentBroadcastIndex > 0) {
+          currentBroadcastIndex--;
+          updateBroadcastModal();
+        }
+      });
+
+      // Close modal
+      btnBroadcastClose.addEventListener("click", function () {
+        broadcastModal.style.display = "none";
+      });
+
+      // OPSI B: Unduh CSV Excel
+      const btnExportCsv = document.getElementById("btn-export-csv");
+      btnExportCsv.addEventListener("click", function () {
+        if (generatedGuestsList.length === 0) {
+          alert("Silakan generate link tamu terlebih dahulu!");
+          return;
+        }
+
+        // CSV Header with UTF-8 BOM so Excel opens it with correct encoding
+        let csvContent = "\ufeff";
+        csvContent += "Nama Tamu,Nomor HP,Link Undangan,Pesan WhatsApp\r\n";
+
+        generatedGuestsList.forEach(guest => {
+          // Clean/escape values for CSV format
+          const cleanName = `"${guest.name.replace(/"/g, '""')}"`;
+          const cleanPhone = `"${guest.phone.replace(/"/g, '""')}"`;
+          const cleanLink = `"${guest.link.replace(/"/g, '""')}"`;
+          const cleanMessage = `"${guest.message.replace(/"/g, '""')}"`;
+
+          csvContent += `${cleanName},${cleanPhone},${cleanLink},${cleanMessage}\r\n`;
+        });
+
+        // Trigger browser download
+        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.setAttribute("href", url);
+        link.setAttribute("download", "daftar_undangan_alkodri_jumro.csv");
+        link.style.visibility = "hidden";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        showToast("Berkas CSV berhasil diunduh!");
       });
 
       // Helper function to show Toast notification
