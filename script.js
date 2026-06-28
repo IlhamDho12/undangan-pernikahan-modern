@@ -168,6 +168,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const ticketIdElement = document.getElementById("ticket-id");
   const btnShareWa = document.getElementById("btn-share-wa");
   const btnResetRsvp = document.getElementById("btn-reset-rsvp");
+  const btnDownloadQr = document.getElementById("btn-download-qr");
 
   // Show/Hide guest count based on attendance selection
   rsvpStatus.addEventListener("change", function () {
@@ -230,6 +231,31 @@ document.addEventListener("DOMContentLoaded", function () {
       btnShareWa.onclick = function () {
         const textMessage = `Halo Alkodri & Jumro, saya ingin mengonfirmasi kehadiran di acara pernikahan kalian.%0A%0A*Nama:* ${encodeURIComponent(name)}%0A*Kehadiran:* Hadir (${guests} Orang)%0A*Kode Tiket:* ${ticketId}%0A*Pesan:* "${encodeURIComponent(message)}"%0A%0A*Sampai jumpa di lokasi acara!*`;
         window.open(`https://wa.me/6281234567890?text=${textMessage}`, '_blank');
+      };
+
+      // Setup QR Code download content
+      btnDownloadQr.onclick = function () {
+        const qrUrl = ticketQrImg.src;
+        if (!qrUrl) return;
+
+        // Fetch image as blob and download it to bypass CORS restrictions
+        fetch(qrUrl)
+          .then(response => response.blob())
+          .then(blob => {
+            const blobUrl = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = blobUrl;
+            a.download = `Tiket_QR_${name.replace(/\s+/g, "_")}.png`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(blobUrl);
+          })
+          .catch(err => {
+            console.error("Gagal mengunduh QR Code: ", err);
+            // Fallback: open in new tab
+            window.open(qrUrl, "_blank");
+          });
       };
 
     } else {
