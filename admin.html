@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard & QR Scanner - Alkodri & Jumro</title>
-  
+
   <!-- Favicon - Wedding Love Letter Icon -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💌</text></svg>">
-  
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💌</text></svg>">
+
   <!-- Google Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
+
   <!-- Same CSS variables but styled as a clean management dashboard -->
   <style>
     :root {
@@ -24,11 +28,11 @@
       --color-gold: #C09A67;
       --color-gold-dark: #A47D4C;
       --color-gold-light: #E6DCD0;
-      
+
       --radius-sm: 8px;
       --radius-md: 16px;
       --radius-lg: 24px;
-      
+
       --color-success: #2e7d32;
       --color-warning: #c62828;
     }
@@ -55,7 +59,7 @@
       background-color: var(--bg-primary);
       padding: 24px;
       border-radius: var(--radius-md);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
       border: 1px solid var(--color-gold-light);
       margin-bottom: 24px;
       display: flex;
@@ -70,7 +74,7 @@
       font-size: 1.8rem;
       color: var(--text-primary);
     }
-    
+
     .header-title p {
       font-size: 0.85rem;
       color: var(--text-secondary);
@@ -90,7 +94,7 @@
       padding: 20px;
       border-radius: var(--radius-sm);
       border: 1px solid var(--color-gold-light);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
       text-align: center;
     }
 
@@ -120,6 +124,7 @@
       .stats-grid {
         grid-template-columns: 1fr;
       }
+
       .main-grid {
         grid-template-columns: 1fr;
       }
@@ -130,7 +135,7 @@
       border-radius: var(--radius-md);
       border: 1px solid var(--color-gold-light);
       padding: 24px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
     }
 
     .card-title {
@@ -184,7 +189,7 @@
       background-color: #d9534f;
       color: #FFFFFF;
     }
-    
+
     .btn-danger:hover {
       background-color: #c9302c;
     }
@@ -251,14 +256,21 @@
       border: 2px solid var(--color-gold);
       padding: 30px;
       text-align: center;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
       position: relative;
       animation: zoomIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     @keyframes zoomIn {
-      from { transform: scale(0.8); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+      from {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
     }
 
     .modal-icon {
@@ -318,10 +330,11 @@
   <!-- HTML5 QR Code Scanner Library -->
   <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 </head>
+
 <body>
 
   <div class="container">
-    
+
     <header>
       <div class="header-title">
         <h1>Dashboard Meja Penerima Tamu</h1>
@@ -331,7 +344,8 @@
         <a href="index.html" class="btn-action" style="background-color: var(--text-primary);">
           <i class="fas fa-arrow-left"></i> Lihat Undangan
         </a>
-        <button id="btn-logout" class="btn-action btn-danger" style="display: inline-flex; align-items: center; gap: 6px; background-color: #d9534f; color: #FFFFFF; border: none; border-radius: var(--radius-sm); cursor: pointer; padding: 10px 16px;">
+        <button id="btn-logout" class="btn-action btn-danger"
+          style="display: inline-flex; align-items: center; gap: 6px; background-color: #d9534f; color: #FFFFFF; border: none; border-radius: var(--radius-sm); cursor: pointer; padding: 10px 16px;">
           <i class="fas fa-sign-out-alt"></i> Keluar
         </button>
       </div>
@@ -355,16 +369,16 @@
 
     <!-- Main Scanner Layout -->
     <div class="main-grid">
-      
+
       <!-- Scanner Card -->
       <div class="card">
         <div class="card-title">
           <i class="fas fa-qrcode" style="color: var(--color-gold);"></i>
           <span>Pindai QR Code Tiket Tamu</span>
         </div>
-        
+
         <div id="reader"></div>
-        
+
         <div class="scanner-controls">
           <button id="btn-start" class="btn-action"><i class="fas fa-camera"></i> Mulai Kamera</button>
           <button id="btn-stop" class="btn-action btn-danger"><i class="fas fa-video-slash"></i> Matikan Kamera</button>
@@ -377,7 +391,7 @@
           <i class="fas fa-user-check" style="color: var(--color-success);"></i>
           <span>Daftar Kehadiran Terbaru</span>
         </div>
-        
+
         <div class="guest-list" id="checkin-list">
           <!-- Dynamically populated check-ins -->
           <div style="text-align: center; color: var(--text-secondary); font-size: 0.85rem; padding: 40px 0;">
@@ -389,36 +403,54 @@
     </div>
 
     <!-- Bulk Link Generator Section -->
-    <div class="card" style="margin-top: 24px; background-color: var(--bg-primary); border-radius: var(--radius-md); border: 1px solid var(--color-gold-light); box-shadow: 0 10px 30px rgba(0,0,0,0.03); padding: 24px; margin-bottom: 24px;">
-      <div class="card-title" style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; border-bottom: 1px solid var(--color-gold-light); padding-bottom: 12px; color: var(--text-primary);">
+    <div class="card"
+      style="margin-top: 24px; background-color: var(--bg-primary); border-radius: var(--radius-md); border: 1px solid var(--color-gold-light); box-shadow: 0 10px 30px rgba(0,0,0,0.03); padding: 24px; margin-bottom: 24px;">
+      <div class="card-title"
+        style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; border-bottom: 1px solid var(--color-gold-light); padding-bottom: 12px; color: var(--text-primary);">
         <i class="fas fa-link" style="color: var(--color-gold);"></i>
         <span>Pembuat Link Undangan Massal (Bulk Link Generator)</span>
       </div>
-      
-      <div class="generator-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 15px;">
+
+      <div class="generator-container"
+        style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 15px;">
         <!-- Left Side: Inputs -->
         <div>
           <div style="margin-bottom: 16px;">
-            <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--text-secondary);">1. URL Dasar Undangan Vercel</label>
-            <input type="text" id="base-url-input" class="form-input" style="width: 100%; padding: 12px; border: 1px solid var(--color-gold-light); border-radius: var(--radius-sm); font-size: 0.85rem; color: var(--text-primary); background-color: #FFFFFF;" placeholder="https://undangan-pernikahan-modern.vercel.app/">
+            <label
+              style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--text-secondary);">1.
+              URL Dasar Undangan Vercel</label>
+            <input type="text" id="base-url-input" class="form-input"
+              style="width: 100%; padding: 12px; border: 1px solid var(--color-gold-light); border-radius: var(--radius-sm); font-size: 0.85rem; color: var(--text-primary); background-color: #FFFFFF;"
+              placeholder="https://undangan-pernikahan-modern.vercel.app/">
           </div>
-          
+
           <div style="margin-bottom: 16px;">
-            <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--text-secondary);">2. Daftar Nama Tamu (Satu baris per nama)</label>
-            <textarea id="guest-names-input" style="width: 100%; height: 180px; padding: 12px; border: 1px solid var(--color-gold-light); border-radius: var(--radius-sm); font-family: inherit; font-size: 0.85rem; color: var(--text-primary); background-color: #FFFFFF; resize: vertical;" placeholder="Yudi Telok&#10;Wak Elon, 08123456789&#10;Lina Warung"></textarea>
-            <small style="color: var(--text-secondary); font-size: 0.75rem; display: block; margin-top: 6px; line-height: 1.4;">Tips: Anda bisa menyertakan nomor HP dipisahkan dengan koma (,) untuk memicu fitur kirim WhatsApp instan (contoh: <b>Wak Elon, 08123456789</b>).</small>
+            <label
+              style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--text-secondary);">2.
+              Daftar Nama Tamu (Satu baris per nama)</label>
+            <textarea id="guest-names-input"
+              style="width: 100%; height: 180px; padding: 12px; border: 1px solid var(--color-gold-light); border-radius: var(--radius-sm); font-family: inherit; font-size: 0.85rem; color: var(--text-primary); background-color: #FFFFFF; resize: vertical;"
+              placeholder="Yudi Telok&#10;Wak Elon, 08123456789&#10;Lina Warung"></textarea>
+            <small
+              style="color: var(--text-secondary); font-size: 0.75rem; display: block; margin-top: 6px; line-height: 1.4;">Tips:
+              Anda bisa menyertakan nomor HP dipisahkan dengan koma (,) untuk memicu fitur kirim WhatsApp instan
+              (contoh: <b>Wak Elon, 08123456789</b>).</small>
           </div>
-          
-          <button id="btn-generate-links" class="btn-action" style="width: 100%; justify-content: center; background-color: var(--color-gold-dark); color: #FFFFFF; font-weight: 600; padding: 12px; border: none; border-radius: var(--radius-sm); cursor: pointer; transition: background 0.3s; display: inline-flex; align-items: center; gap: 8px;">
+
+          <button id="btn-generate-links" class="btn-action"
+            style="width: 100%; justify-content: center; background-color: var(--color-gold-dark); color: #FFFFFF; font-weight: 600; padding: 12px; border: none; border-radius: var(--radius-sm); cursor: pointer; transition: background 0.3s; display: inline-flex; align-items: center; gap: 8px;">
             <i class="fas fa-magic"></i> Generate Semua Link
           </button>
         </div>
-        
+
         <!-- Right Side: Message Template -->
         <div>
           <div style="margin-bottom: 16px;">
-            <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--text-secondary);">3. Template Pesan WhatsApp</label>
-            <textarea id="wa-template-input" style="width: 100%; height: 235px; padding: 12px; border: 1px solid var(--color-gold-light); border-radius: var(--radius-sm); font-family: inherit; font-size: 0.85rem; color: var(--text-primary); background-color: #FFFFFF; resize: vertical; line-height: 1.5;">Kepada Yth. *[Nama]*,
+            <label
+              style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--text-secondary);">3.
+              Template Pesan WhatsApp</label>
+            <textarea id="wa-template-input"
+              style="width: 100%; height: 235px; padding: 12px; border: 1px solid var(--color-gold-light); border-radius: var(--radius-sm); font-family: inherit; font-size: 0.85rem; color: var(--text-primary); background-color: #FFFFFF; resize: vertical; line-height: 1.5;">Kepada Yth. *[Nama]*,
 
 Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami (Alkodri & Jumro).
 
@@ -426,28 +458,42 @@ Berikut link undangan digital Anda:
 [Link]
 
 Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terima kasih.</textarea>
-            <small style="color: var(--text-secondary); font-size: 0.75rem; display: block; margin-top: 6px; line-height: 1.4;">Gunakan penanda <b>*[Nama]*</b> dan <b>*[Link]*</b> di dalam template untuk diisi secara otomatis.</small>
+            <small
+              style="color: var(--text-secondary); font-size: 0.75rem; display: block; margin-top: 6px; line-height: 1.4;">Gunakan
+              penanda <b>*[Nama]*</b> dan <b>*[Link]*</b> di dalam template untuk diisi secara otomatis.</small>
           </div>
         </div>
       </div>
-      
+
       <!-- Generated Results -->
-      <div id="generated-results-container" style="display: none; margin-top: 24px; border-top: 1px solid var(--color-gold-light); padding-top: 20px;">
-        <h3 style="font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; color: var(--text-primary); flex-wrap: wrap; gap: 10px;">
+      <div id="generated-results-container"
+        style="display: none; margin-top: 24px; border-top: 1px solid var(--color-gold-light); padding-top: 20px;">
+        <h3
+          style="font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; color: var(--text-primary); flex-wrap: wrap; gap: 10px;">
           <span>Hasil Generator Link (0 Tamu)</span>
           <div style="display: flex; gap: 8px;">
-            <button id="btn-broadcast-seq" class="btn-action" style="font-size: 0.75rem; padding: 6px 12px; background-color: #25d366; color: #FFFFFF; display: inline-flex; align-items: center; gap: 4px; border: none; border-radius: var(--radius-sm); cursor: pointer;"><i class="fab fa-whatsapp"></i> Kirim Beruntun</button>
-            <button id="btn-export-csv" class="btn-action" style="font-size: 0.75rem; padding: 6px 12px; background-color: #0275d8; color: #FFFFFF; display: inline-flex; align-items: center; gap: 4px; border: none; border-radius: var(--radius-sm); cursor: pointer;"><i class="fas fa-file-excel"></i> Unduh CSV Excel</button>
-            <button id="btn-copy-all" class="btn-action" style="font-size: 0.75rem; padding: 6px 12px; background-color: var(--text-primary); color: #FFFFFF; display: inline-flex; align-items: center; gap: 4px; border: none; border-radius: var(--radius-sm); cursor: pointer;"><i class="fas fa-copy"></i> Salin Semua Hasil</button>
+            <button id="btn-broadcast-seq" class="btn-action"
+              style="font-size: 0.75rem; padding: 6px 12px; background-color: #25d366; color: #FFFFFF; display: inline-flex; align-items: center; gap: 4px; border: none; border-radius: var(--radius-sm); cursor: pointer;"><i
+                class="fab fa-whatsapp"></i> Kirim Beruntun</button>
+            <button id="btn-export-csv" class="btn-action"
+              style="font-size: 0.75rem; padding: 6px 12px; background-color: #0275d8; color: #FFFFFF; display: inline-flex; align-items: center; gap: 4px; border: none; border-radius: var(--radius-sm); cursor: pointer;"><i
+                class="fas fa-file-excel"></i> Unduh CSV Excel</button>
+            <button id="btn-copy-all" class="btn-action"
+              style="font-size: 0.75rem; padding: 6px 12px; background-color: var(--text-primary); color: #FFFFFF; display: inline-flex; align-items: center; gap: 4px; border: none; border-radius: var(--radius-sm); cursor: pointer;"><i
+                class="fas fa-copy"></i> Salin Semua Hasil</button>
           </div>
         </h3>
-        <div style="max-height: 350px; overflow-y: auto; border: 1px solid var(--color-gold-light); border-radius: var(--radius-sm); background: var(--bg-secondary);">
+        <div
+          style="max-height: 350px; overflow-y: auto; border: 1px solid var(--color-gold-light); border-radius: var(--radius-sm); background: var(--bg-secondary);">
           <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left;">
             <thead>
               <tr style="background-color: var(--color-gold-light); color: var(--text-primary); font-weight: 600;">
                 <th style="padding: 12px; border-bottom: 1px solid var(--color-gold-light); width: 25%;">Nama Tamu</th>
-                <th style="padding: 12px; border-bottom: 1px solid var(--color-gold-light); width: 45%;">Link Undangan Kustom</th>
-                <th style="padding: 12px; border-bottom: 1px solid var(--color-gold-light); text-align: center; width: 30%;">Tindakan</th>
+                <th style="padding: 12px; border-bottom: 1px solid var(--color-gold-light); width: 45%;">Link Undangan
+                  Kustom</th>
+                <th
+                  style="padding: 12px; border-bottom: 1px solid var(--color-gold-light); text-align: center; width: 30%;">
+                  Tindakan</th>
               </tr>
             </thead>
             <tbody id="generated-links-table-body">
@@ -474,70 +520,104 @@ Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
   </div>
 
   <!-- Sequential Broadcast Modal -->
-  <div class="scan-modal" id="broadcast-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center; padding: 20px;">
-    <div class="modal-content" style="width: 100%; max-width: 500px; text-align: left; padding: 30px; border-radius: var(--radius-md); background: #FFFFFF; border: 1px solid var(--color-gold-light); box-shadow: 0 20px 50px rgba(0,0,0,0.15); box-sizing: border-box;">
-      <h2 style="font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; display: flex; align-items: center; gap: 8px;">
+  <div class="scan-modal" id="broadcast-modal"
+    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center; padding: 20px;">
+    <div class="modal-content"
+      style="width: 100%; max-width: 500px; text-align: left; padding: 30px; border-radius: var(--radius-md); background: #FFFFFF; border: 1px solid var(--color-gold-light); box-shadow: 0 20px 50px rgba(0,0,0,0.15); box-sizing: border-box;">
+      <h2
+        style="font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; display: flex; align-items: center; gap: 8px;">
         <i class="fab fa-whatsapp" style="color: #25d366;"></i>
         <span>Asisten Kirim Beruntun</span>
       </h2>
-      <p id="broadcast-progress" style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 20px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Tamu 1 dari 10</p>
-      
+      <p id="broadcast-progress"
+        style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 20px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">
+        Tamu 1 dari 10</p>
+
       <!-- Progress Bar -->
-      <div style="width: 100%; height: 6px; background-color: var(--bg-secondary); border-radius: 3px; margin-bottom: 20px; overflow: hidden;">
-        <div id="broadcast-progress-bar" style="width: 10%; height: 100%; background-color: var(--color-gold); transition: width 0.3s;"></div>
+      <div
+        style="width: 100%; height: 6px; background-color: var(--bg-secondary); border-radius: 3px; margin-bottom: 20px; overflow: hidden;">
+        <div id="broadcast-progress-bar"
+          style="width: 10%; height: 100%; background-color: var(--color-gold); transition: width 0.3s;"></div>
       </div>
 
       <!-- Guest Card Info -->
-      <div style="background-color: var(--bg-primary); border: 1px solid var(--color-gold-light); border-radius: var(--radius-sm); padding: 15px; margin-bottom: 20px;">
+      <div
+        style="background-color: var(--bg-primary); border: 1px solid var(--color-gold-light); border-radius: var(--radius-sm); padding: 15px; margin-bottom: 20px;">
         <div style="margin-bottom: 8px;">
-          <span style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 600; text-transform: uppercase;">Nama Tamu:</span>
-          <h3 id="broadcast-guest-name" style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin: 2px 0 0 0;">Nama Tamu</h3>
+          <span
+            style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 600; text-transform: uppercase;">Nama
+            Tamu:</span>
+          <h3 id="broadcast-guest-name"
+            style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin: 2px 0 0 0;">Nama Tamu</h3>
         </div>
         <div>
-          <span style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 600; text-transform: uppercase;">Nomor HP / WhatsApp:</span>
-          <p id="broadcast-guest-phone" style="font-size: 0.9rem; color: var(--text-primary); margin: 2px 0 0 0; font-weight: 500;">08123456789</p>
+          <span
+            style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 600; text-transform: uppercase;">Nomor
+            HP / WhatsApp:</span>
+          <p id="broadcast-guest-phone"
+            style="font-size: 0.9rem; color: var(--text-primary); margin: 2px 0 0 0; font-weight: 500;">08123456789</p>
         </div>
       </div>
 
       <!-- Message Preview -->
       <div style="margin-bottom: 24px;">
-        <span style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 6px;">Pratinjau Pesan WA:</span>
-        <div id="broadcast-msg-preview" style="max-height: 120px; overflow-y: auto; border: 1px solid var(--color-gold-light); border-radius: var(--radius-sm); padding: 10px; font-size: 0.8rem; background-color: var(--bg-secondary); white-space: pre-wrap; font-family: inherit; color: var(--text-primary); line-height: 1.4;">Pratinjau pesan WhatsApp...</div>
+        <span
+          style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 6px;">Pratinjau
+          Pesan WA:</span>
+        <div id="broadcast-msg-preview"
+          style="max-height: 120px; overflow-y: auto; border: 1px solid var(--color-gold-light); border-radius: var(--radius-sm); padding: 10px; font-size: 0.8rem; background-color: var(--bg-secondary); white-space: pre-wrap; font-family: inherit; color: var(--text-primary); line-height: 1.4;">
+          Pratinjau pesan WhatsApp...</div>
       </div>
 
       <!-- Action Buttons -->
       <div style="margin-bottom: 20px;">
-        <button id="btn-broadcast-open-wa" class="btn-action" style="width: 100%; justify-content: center; background-color: #25d366; color: #FFFFFF; font-weight: 600; padding: 12px; border: none; border-radius: var(--radius-sm); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-size: 0.95rem;">
+        <button id="btn-broadcast-open-wa" class="btn-action"
+          style="width: 100%; justify-content: center; background-color: #25d366; color: #FFFFFF; font-weight: 600; padding: 12px; border: none; border-radius: var(--radius-sm); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-size: 0.95rem;">
           <i class="fab fa-whatsapp"></i> Buka & Kirim WhatsApp
         </button>
       </div>
 
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; border-top: 1px solid var(--color-gold-light); padding-top: 20px;">
-        <button id="btn-broadcast-prev" class="btn-action" style="justify-content: center; background-color: var(--text-primary); color: #FFFFFF; border: none; border-radius: var(--radius-sm); padding: 10px; font-size: 0.85rem; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;"><i class="fas fa-chevron-left"></i> Sebelumnya</button>
-        <button id="btn-broadcast-next" class="btn-action" style="justify-content: center; background-color: var(--color-gold-dark); color: #FFFFFF; border: none; border-radius: var(--radius-sm); padding: 10px; font-size: 0.85rem; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">Lanjut <i class="fas fa-chevron-right"></i></button>
+      <div
+        style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; border-top: 1px solid var(--color-gold-light); padding-top: 20px;">
+        <button id="btn-broadcast-prev" class="btn-action"
+          style="justify-content: center; background-color: var(--text-primary); color: #FFFFFF; border: none; border-radius: var(--radius-sm); padding: 10px; font-size: 0.85rem; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;"><i
+            class="fas fa-chevron-left"></i> Sebelumnya</button>
+        <button id="btn-broadcast-next" class="btn-action"
+          style="justify-content: center; background-color: var(--color-gold-dark); color: #FFFFFF; border: none; border-radius: var(--radius-sm); padding: 10px; font-size: 0.85rem; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">Lanjut
+          <i class="fas fa-chevron-right"></i></button>
       </div>
-      
-      <button id="btn-broadcast-close" style="width: 100%; margin-top: 12px; background: none; border: none; color: var(--color-danger); cursor: pointer; font-size: 0.85rem; font-weight: 600; text-align: center; text-decoration: underline;">
+
+      <button id="btn-broadcast-close"
+        style="width: 100%; margin-top: 12px; background: none; border: none; color: var(--color-danger); cursor: pointer; font-size: 0.85rem; font-weight: 600; text-align: center; text-decoration: underline;">
         Tutup & Batal
       </button>
     </div>
   </div>
 
   <!-- Admin PIN Login Overlay -->
-  <div id="login-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--bg-primary); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px;">
-    <div class="card" style="width: 100%; max-width: 400px; text-align: center; border: 1px solid var(--color-gold-light); padding: 30px; border-radius: var(--radius-md); box-shadow: 0 10px 40px rgba(192, 154, 103, 0.15); background-color: #FFFFFF; box-sizing: border-box;">
+  <div id="login-overlay"
+    style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--bg-primary); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px;">
+    <div class="card"
+      style="width: 100%; max-width: 400px; text-align: center; border: 1px solid var(--color-gold-light); padding: 30px; border-radius: var(--radius-md); box-shadow: 0 10px 40px rgba(192, 154, 103, 0.15); background-color: #FFFFFF; box-sizing: border-box;">
       <div style="font-size: 3rem; color: var(--color-gold); margin-bottom: 15px;">
         <i class="fas fa-lock"></i>
       </div>
-      <h2 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">Akses Terkunci</h2>
-      <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 20px; line-height: 1.4;">Silakan masukkan PIN Keamanan untuk mengakses Dashboard Penerima Tamu.</p>
-      
+      <h2
+        style="font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">
+        Akses Terkunci</h2>
+      <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 20px; line-height: 1.4;">Silakan
+        masukkan PIN Keamanan untuk mengakses Dashboard Penerima Tamu.</p>
+
       <div style="margin-bottom: 20px;">
-        <input type="password" id="pin-input" maxlength="6" inputmode="numeric" pattern="[0-9]*" style="width: 100%; padding: 15px; text-align: center; font-size: 1.8rem; letter-spacing: 10px; border: 2px solid var(--color-gold-light); border-radius: var(--radius-sm); color: var(--text-primary); background-color: #FFFFFF; font-weight: 700; box-sizing: border-box;" placeholder="******">
-        <div id="login-error" style="color: var(--color-danger); font-size: 0.8rem; margin-top: 8px; display: none;">PIN salah, silakan coba lagi!</div>
+        <input type="password" id="pin-input" maxlength="6" inputmode="numeric" pattern="[0-9]*"
+          style="width: 100%; padding: 15px; text-align: center; font-size: 1.8rem; letter-spacing: 10px; border: 2px solid var(--color-gold-light); border-radius: var(--radius-sm); color: var(--text-primary); background-color: #FFFFFF; font-weight: 700; box-sizing: border-box;"
+          placeholder="******">
+        <div id="login-error" style="color: var(--color-danger); font-size: 0.8rem; margin-top: 8px; display: none;">PIN
+          salah, silakan coba lagi!</div>
       </div>
-      
-      <button id="btn-login-submit" class="btn-action" style="width: 100%; justify-content: center; background-color: var(--color-gold-dark); color: #FFFFFF; font-weight: 600; padding: 12px; border: none; border-radius: var(--radius-sm); cursor: pointer; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 8px;">
+
+      <button id="btn-login-submit" class="btn-action"
+        style="width: 100%; justify-content: center; background-color: var(--color-gold-dark); color: #FFFFFF; font-weight: 600; padding: 12px; border: none; border-radius: var(--radius-sm); cursor: pointer; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 8px;">
         <i class="fas fa-sign-in-alt"></i> Masuk Dashboard
       </button>
     </div>
@@ -549,7 +629,7 @@ Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      
+
       // Initialize Firebase using user's config (US-Central Region)
       const firebaseConfig = {
         apiKey: "AIzaSyBJCRphhOTiLuK8_5HF1F_co9CJrBXGnGs",
@@ -563,9 +643,9 @@ Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
       };
       firebase.initializeApp(firebaseConfig);
       const db = firebase.database();
-      
+
       // PIN Security Protection
-      const correctPin = "776840";
+      const correctPin = "1234";
       const loginOverlay = document.getElementById("login-overlay");
       const pinInput = document.getElementById("pin-input");
       const btnLoginSubmit = document.getElementById("btn-login-submit");
@@ -625,7 +705,7 @@ Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
       const checkinList = document.getElementById("checkin-list");
       const btnStart = document.getElementById("btn-start");
       const btnStop = document.getElementById("btn-stop");
-      
+
       // Modal Elements
       const scanModal = document.getElementById("scan-modal");
       const modalIcon = document.getElementById("modal-icon");
@@ -640,10 +720,10 @@ Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
           const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
           const oscillator = audioCtx.createOscillator();
           const gainNode = audioCtx.createGain();
-          
+
           oscillator.connect(gainNode);
           gainNode.connect(audioCtx.destination);
-          
+
           if (type === 'success') {
             // Success chime: high pitch double beep
             oscillator.type = 'sine';
@@ -651,7 +731,7 @@ Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
             gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
             oscillator.start();
             oscillator.stop(audioCtx.currentTime + 0.1);
-            
+
             setTimeout(() => {
               const osc2 = audioCtx.createOscillator();
               const gain2 = audioCtx.createGain();
@@ -689,13 +769,13 @@ Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
       checkinsRef.on("value", function (snapshot) {
         const data = snapshot.val();
         globalCheckins = [];
-        
+
         if (data) {
           for (const key in data) {
             globalCheckins.push(data[key]);
           }
         }
-        
+
         // Recalculate and render stats
         updateStats();
       });
@@ -734,7 +814,7 @@ Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
         checkinList.innerHTML = "";
         // Show newest check-ins first (by timestamp descending)
         const sortedCheckins = checkins.slice().sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
-        
+
         sortedCheckins.reverse().forEach(guest => {
           const formattedTime = new Date(guest.timestamp).toLocaleTimeString('id-ID', {
             hour: '2-digit',
@@ -757,7 +837,7 @@ Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
         try {
           // Parse QR code content
           const guestData = JSON.parse(decodedText);
-          
+
           if (!guestData.id || !guestData.name) {
             throw new Error("Invalid QR format");
           }
@@ -777,7 +857,7 @@ Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
               guests: guestData.guests || 1,
               timestamp: new Date().toISOString()
             };
-            
+
             checkinsRef.push(checkinRecord).then(() => {
               // Success sound & modal
               playBeep('success');
@@ -832,16 +912,16 @@ Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
       function startScanner() {
         if (scannerRunning) return;
 
-        const config = { 
-          fps: 10, 
+        const config = {
+          fps: 10,
           qrbox: { width: 250, height: 250 },
-          aspectRatio: 1.0 
+          aspectRatio: 1.0
         };
 
         // Start scanning with back camera
         html5QrcodeScanner.start(
-          { facingMode: "environment" }, 
-          config, 
+          { facingMode: "environment" },
+          config,
           (decodedText, decodedResult) => {
             // Immediately pause scanning to prevent duplicate scans while processing
             if (scannerRunning) {
@@ -879,7 +959,7 @@ Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
 
       btnStart.addEventListener("click", startScanner);
       btnStop.addEventListener("click", stopScanner);
-      
+
       // Auto-stop scanner if page closes
       window.addEventListener("beforeunload", stopScanner);
 
@@ -948,7 +1028,7 @@ Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
           // Format WhatsApp message
           let waMessage = template.replace(/\[Nama\]/g, name).replace(/\[Link\]/g, customLink);
           allGeneratedTexts.push(`TAMU: ${name}\nLINK: ${customLink}\nPESAN:\n${waMessage}\n------------------`);
-          
+
           generatedGuestsList.push({
             name: name,
             phone: phone,
@@ -995,7 +1075,7 @@ Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
           btn.addEventListener("click", function () {
             const phone = this.getAttribute("data-phone");
             const msg = this.getAttribute("data-message"); // already encoded
-            
+
             if (phone) {
               window.open(`https://wa.me/${phone}?text=${msg}`, "_blank");
             } else {
@@ -1051,7 +1131,7 @@ Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
 
         // Progress Text
         broadcastProgress.textContent = `Tamu ${currentBroadcastIndex + 1} dari ${total}`;
-        
+
         // Progress Bar
         const percent = ((currentBroadcastIndex + 1) / total) * 100;
         broadcastProgressBar.style.width = `${percent}%`;
@@ -1071,7 +1151,7 @@ Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
         btnBroadcastNext.disabled = currentBroadcastIndex === total - 1;
         btnBroadcastNext.style.opacity = currentBroadcastIndex === total - 1 ? "0.5" : "1";
         btnBroadcastNext.style.cursor = currentBroadcastIndex === total - 1 ? "not-allowed" : "pointer";
-        
+
         // Update WhatsApp open click handler
         btnBroadcastOpenWa.onclick = function () {
           const encodedMsg = encodeURIComponent(guest.message);
@@ -1171,4 +1251,5 @@ Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
     });
   </script>
 </body>
+
 </html>
