@@ -324,9 +324,14 @@
         <h1>Dashboard Meja Penerima Tamu</h1>
         <p>Pernikahan Alkodri & Jumro - Sistem Validasi Tamu QR Code</p>
       </div>
-      <a href="index.html" class="btn-action" style="background-color: var(--text-primary);">
-        <i class="fas fa-arrow-left"></i> Lihat Undangan
-      </a>
+      <div style="display: flex; gap: 10px;">
+        <a href="index.html" class="btn-action" style="background-color: var(--text-primary);">
+          <i class="fas fa-arrow-left"></i> Lihat Undangan
+        </a>
+        <button id="btn-logout" class="btn-action btn-danger" style="display: inline-flex; align-items: center; gap: 6px; background-color: var(--color-danger); color: #FFFFFF; border: none; border-radius: var(--radius-sm); cursor: pointer; padding: 10px 16px;">
+          <i class="fas fa-sign-out-alt"></i> Keluar
+        </button>
+      </div>
     </header>
 
     <!-- Stats Dashboard -->
@@ -461,6 +466,26 @@ Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
     </div>
   </div>
 
+  <!-- Admin PIN Login Overlay -->
+  <div id="login-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--bg-primary); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px;">
+    <div class="card" style="width: 100%; max-width: 400px; text-align: center; border: 1px solid var(--color-gold-light); padding: 30px; border-radius: var(--radius-md); box-shadow: 0 10px 40px rgba(192, 154, 103, 0.15); background-color: #FFFFFF; box-sizing: border-box;">
+      <div style="font-size: 3rem; color: var(--color-gold); margin-bottom: 15px;">
+        <i class="fas fa-lock"></i>
+      </div>
+      <h2 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">Akses Terkunci</h2>
+      <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 20px; line-height: 1.4;">Silakan masukkan PIN Keamanan untuk mengakses Dashboard Penerima Tamu.</p>
+      
+      <div style="margin-bottom: 20px;">
+        <input type="password" id="pin-input" maxlength="6" inputmode="numeric" pattern="[0-9]*" style="width: 100%; padding: 15px; text-align: center; font-size: 1.8rem; letter-spacing: 10px; border: 2px solid var(--color-gold-light); border-radius: var(--radius-sm); color: var(--text-primary); background-color: #FFFFFF; font-weight: 700; box-sizing: border-box;" placeholder="******">
+        <div id="login-error" style="color: var(--color-danger); font-size: 0.8rem; margin-top: 8px; display: none;">PIN salah, silakan coba lagi!</div>
+      </div>
+      
+      <button id="btn-login-submit" class="btn-action" style="width: 100%; justify-content: center; background-color: var(--color-gold-dark); color: #FFFFFF; font-weight: 600; padding: 12px; border: none; border-radius: var(--radius-sm); cursor: pointer; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 8px;">
+        <i class="fas fa-sign-in-alt"></i> Masuk Dashboard
+      </button>
+    </div>
+  </div>
+
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
@@ -482,6 +507,57 @@ Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
       firebase.initializeApp(firebaseConfig);
       const db = firebase.database();
       
+      // PIN Security Protection
+      const correctPin = "776840";
+      const loginOverlay = document.getElementById("login-overlay");
+      const pinInput = document.getElementById("pin-input");
+      const btnLoginSubmit = document.getElementById("btn-login-submit");
+      const loginError = document.getElementById("login-error");
+
+      // Check authentication session in localStorage
+      if (localStorage.getItem("admin_authenticated") === "true") {
+        loginOverlay.style.display = "none";
+      }
+
+      function handleLogin() {
+        const enteredPin = pinInput.value.trim();
+        if (enteredPin === correctPin) {
+          localStorage.setItem("admin_authenticated", "true");
+          loginOverlay.style.opacity = "0";
+          setTimeout(() => {
+            loginOverlay.style.display = "none";
+          }, 300);
+          showToast("Akses diizinkan!");
+        } else {
+          loginError.style.display = "block";
+          pinInput.value = "";
+          pinInput.focus();
+          pinInput.style.borderColor = "var(--color-danger)";
+          setTimeout(() => {
+            pinInput.style.borderColor = "var(--color-gold-light)";
+          }, 1000);
+        }
+      }
+
+      btnLoginSubmit.addEventListener("click", handleLogin);
+      pinInput.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          handleLogin();
+        }
+      });
+      pinInput.addEventListener("input", function () {
+        loginError.style.display = "none";
+      });
+
+      // Logout Button Logic
+      const btnLogout = document.getElementById("btn-logout");
+      btnLogout.addEventListener("click", function () {
+        if (confirm("Apakah Anda yakin ingin keluar dari dashboard admin?")) {
+          localStorage.removeItem("admin_authenticated");
+          location.reload();
+        }
+      });
+
       const html5QrcodeScanner = new Html5Qrcode("reader");
       let scannerRunning = false;
 
