@@ -380,6 +380,72 @@
 
     </div>
 
+    <!-- Bulk Link Generator Section -->
+    <div class="card" style="margin-top: 24px; background-color: var(--bg-primary); border-radius: var(--radius-md); border: 1px solid var(--color-gold-light); box-shadow: 0 10px 30px rgba(0,0,0,0.03); padding: 24px; margin-bottom: 24px;">
+      <div class="card-title" style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; border-bottom: 1px solid var(--color-gold-light); padding-bottom: 12px; color: var(--text-primary);">
+        <i class="fas fa-link" style="color: var(--color-gold);"></i>
+        <span>Pembuat Link Undangan Massal (Bulk Link Generator)</span>
+      </div>
+      
+      <div class="generator-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 15px;">
+        <!-- Left Side: Inputs -->
+        <div>
+          <div style="margin-bottom: 16px;">
+            <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--text-secondary);">1. URL Dasar Undangan Vercel</label>
+            <input type="text" id="base-url-input" class="form-input" style="width: 100%; padding: 12px; border: 1px solid var(--color-gold-light); border-radius: var(--radius-sm); font-size: 0.85rem; color: var(--text-primary); background-color: #FFFFFF;" placeholder="https://undangan-pernikahan-modern.vercel.app/">
+          </div>
+          
+          <div style="margin-bottom: 16px;">
+            <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--text-secondary);">2. Daftar Nama Tamu (Satu baris per nama)</label>
+            <textarea id="guest-names-input" style="width: 100%; height: 180px; padding: 12px; border: 1px solid var(--color-gold-light); border-radius: var(--radius-sm); font-family: inherit; font-size: 0.85rem; color: var(--text-primary); background-color: #FFFFFF; resize: vertical;" placeholder="Yudi Telok&#10;Wak Elon, 08123456789&#10;Lina Warung"></textarea>
+            <small style="color: var(--text-secondary); font-size: 0.75rem; display: block; margin-top: 6px; line-height: 1.4;">Tips: Anda bisa menyertakan nomor HP dipisahkan dengan koma (,) untuk memicu fitur kirim WhatsApp instan (contoh: <b>Wak Elon, 08123456789</b>).</small>
+          </div>
+          
+          <button id="btn-generate-links" class="btn-action" style="width: 100%; justify-content: center; background-color: var(--color-gold-dark); color: #FFFFFF; font-weight: 600; padding: 12px; border: none; border-radius: var(--radius-sm); cursor: pointer; transition: background 0.3s; display: inline-flex; align-items: center; gap: 8px;">
+            <i class="fas fa-magic"></i> Generate Semua Link
+          </button>
+        </div>
+        
+        <!-- Right Side: Message Template -->
+        <div>
+          <div style="margin-bottom: 16px;">
+            <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--text-secondary);">3. Template Pesan WhatsApp</label>
+            <textarea id="wa-template-input" style="width: 100%; height: 235px; padding: 12px; border: 1px solid var(--color-gold-light); border-radius: var(--radius-sm); font-family: inherit; font-size: 0.85rem; color: var(--text-primary); background-color: #FFFFFF; resize: vertical; line-height: 1.5;">Kepada Yth. *[Nama]*,
+
+Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami (Alkodri & Jumro).
+
+Berikut link undangan digital Anda:
+[Link]
+
+Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terima kasih.</textarea>
+            <small style="color: var(--text-secondary); font-size: 0.75rem; display: block; margin-top: 6px; line-height: 1.4;">Gunakan penanda <b>*[Nama]*</b> dan <b>*[Link]*</b> di dalam template untuk diisi secara otomatis.</small>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Generated Results -->
+      <div id="generated-results-container" style="display: none; margin-top: 24px; border-top: 1px solid var(--color-gold-light); padding-top: 20px;">
+        <h3 style="font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; color: var(--text-primary);">
+          <span>Hasil Generator Link (0 Tamu)</span>
+          <button id="btn-copy-all" class="btn-action" style="font-size: 0.75rem; padding: 6px 12px; background-color: var(--text-primary); color: #FFFFFF; display: inline-flex; align-items: center; gap: 4px;"><i class="fas fa-copy"></i> Salin Semua Hasil</button>
+        </h3>
+        <div style="max-height: 350px; overflow-y: auto; border: 1px solid var(--color-gold-light); border-radius: var(--radius-sm); background: var(--bg-secondary);">
+          <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left;">
+            <thead>
+              <tr style="background-color: var(--color-gold-light); color: var(--text-primary); font-weight: 600;">
+                <th style="padding: 12px; border-bottom: 1px solid var(--color-gold-light); width: 25%;">Nama Tamu</th>
+                <th style="padding: 12px; border-bottom: 1px solid var(--color-gold-light); width: 45%;">Link Undangan Kustom</th>
+                <th style="padding: 12px; border-bottom: 1px solid var(--color-gold-light); text-align: center; width: 30%;">Tindakan</th>
+              </tr>
+            </thead>
+            <tbody id="generated-links-table-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <!-- Scan Confirmation Modal -->
@@ -686,6 +752,155 @@
 
       // Set initial button states
       btnStop.style.display = "none";
+
+      /* ==========================================
+         BULK LINK GENERATOR LOGIC
+         ========================================== */
+      const baseUrlInput = document.getElementById("base-url-input");
+      // Set base URL to current site origin
+      baseUrlInput.value = window.location.origin + "/";
+
+      const btnGenerate = document.getElementById("btn-generate-links");
+      const guestNamesInput = document.getElementById("guest-names-input");
+      const waTemplateInput = document.getElementById("wa-template-input");
+      const resultsContainer = document.getElementById("generated-results-container");
+      const linksTableBody = document.getElementById("generated-links-table-body");
+      const btnCopyAll = document.getElementById("btn-copy-all");
+
+      let allGeneratedTexts = []; // To hold all copy-paste texts for "Copy All"
+
+      btnGenerate.addEventListener("click", function () {
+        const rawNames = guestNamesInput.value.trim();
+        if (!rawNames) {
+          alert("Silakan masukkan minimal satu nama tamu!");
+          return;
+        }
+
+        const baseUrl = baseUrlInput.value.trim();
+        const template = waTemplateInput.value;
+
+        // Split names by newline
+        const lines = rawNames.split(/\r?\n/);
+        linksTableBody.innerHTML = "";
+        allGeneratedTexts = [];
+
+        let count = 0;
+
+        lines.forEach(line => {
+          if (!line.trim()) return;
+
+          // Check if phone number is provided (comma separated)
+          let name = line;
+          let phone = "";
+          const parts = line.split(",");
+          if (parts.length > 1) {
+            name = parts[0].trim();
+            phone = parts[1].trim().replace(/\D/g, ""); // Remove non-digits
+            // Convert to international format (62) if it starts with 0
+            if (phone.startsWith("0")) {
+              phone = "62" + phone.substring(1);
+            }
+          } else {
+            name = line.trim();
+          }
+
+          count++;
+
+          // URL encode the guest name
+          const encodedName = encodeURIComponent(name).replace(/%20/g, "+");
+          const customLink = `${baseUrl}?to=${encodedName}`;
+
+          // Format WhatsApp message
+          let waMessage = template.replace(/\[Nama\]/g, name).replace(/\[Link\]/g, customLink);
+          allGeneratedTexts.push(`TAMU: ${name}\nLINK: ${customLink}\nPESAN:\n${waMessage}\n------------------`);
+
+          // Table row markup
+          const rowHTML = `
+            <tr style="border-bottom: 1px solid var(--color-gold-light); background-color: #FFFFFF;">
+              <td style="padding: 12px; font-weight: 600; vertical-align: middle; color: var(--text-primary);">${name}</td>
+              <td style="padding: 12px; vertical-align: middle; word-break: break-all;">
+                <a href="${customLink}" target="_blank" style="color: var(--color-gold-dark); text-decoration: underline; font-weight: 500;">${customLink}</a>
+              </td>
+              <td style="padding: 12px; text-align: center; white-space: nowrap; vertical-align: middle;">
+                <button class="btn-action btn-copy-row" data-message="${encodeURIComponent(waMessage)}" style="font-size: 0.75rem; padding: 6px 10px; margin-right: 6px; display: inline-flex; align-items: center; gap: 4px; background-color: var(--text-primary); color: #FFFFFF; border: none; border-radius: var(--radius-sm); cursor: pointer;">
+                  <i class="fas fa-copy"></i> Salin Pesan
+                </button>
+                <button class="btn-action btn-wa-row" data-phone="${phone}" data-message="${encodeURIComponent(waMessage)}" style="font-size: 0.75rem; padding: 6px 10px; background-color: #25d366; color: #FFFFFF; display: inline-flex; align-items: center; gap: 4px; border: none; border-radius: var(--radius-sm); cursor: pointer;">
+                  <i class="fab fa-whatsapp"></i> Kirim WA
+                </button>
+              </td>
+            </tr>
+          `;
+          linksTableBody.insertAdjacentHTML("beforeend", rowHTML);
+        });
+
+        // Update count header
+        resultsContainer.querySelector("h3 span").textContent = `Hasil Generator Link (${count} Tamu)`;
+        resultsContainer.style.display = "block";
+
+        // Bind copy buttons for rows
+        document.querySelectorAll(".btn-copy-row").forEach(btn => {
+          btn.addEventListener("click", function () {
+            const msg = decodeURIComponent(this.getAttribute("data-message"));
+            navigator.clipboard.writeText(msg).then(() => {
+              showToast("Pesan undangan disalin!");
+            });
+          });
+        });
+
+        // Bind WA buttons for rows
+        document.querySelectorAll(".btn-wa-row").forEach(btn => {
+          btn.addEventListener("click", function () {
+            const phone = this.getAttribute("data-phone");
+            const msg = this.getAttribute("data-message"); // already encoded
+            
+            if (phone) {
+              window.open(`https://wa.me/${phone}?text=${msg}`, "_blank");
+            } else {
+              window.open(`https://api.whatsapp.com/send?text=${msg}`, "_blank");
+            }
+          });
+        });
+      });
+
+      // Copy all results handler
+      btnCopyAll.addEventListener("click", function () {
+        if (allGeneratedTexts.length === 0) return;
+        const allText = allGeneratedTexts.join("\n\n");
+        navigator.clipboard.writeText(allText).then(() => {
+          showToast("Semua link & pesan disalin!");
+        });
+      });
+
+      // Helper function to show Toast notification
+      function showToast(message) {
+        let toast = document.getElementById("toast-notification");
+        if (!toast) {
+          toast = document.createElement("div");
+          toast.id = "toast-notification";
+          toast.style.position = "fixed";
+          toast.style.bottom = "30px";
+          toast.style.left = "50%";
+          toast.style.transform = "translateX(-50%)";
+          toast.style.backgroundColor = "var(--text-primary)";
+          toast.style.color = "#FAF8F5";
+          toast.style.padding = "12px 24px";
+          toast.style.borderRadius = "8px";
+          toast.style.fontSize = "0.85rem";
+          toast.style.zIndex = "2000";
+          toast.style.boxShadow = "0 10px 30px rgba(0,0,0,0.15)";
+          toast.style.transition = "opacity 0.3s ease";
+          toast.style.opacity = "0";
+          document.body.appendChild(toast);
+        }
+        toast.textContent = message;
+        toast.style.display = "block";
+        setTimeout(() => { toast.style.opacity = "1"; }, 10);
+        setTimeout(() => {
+          toast.style.opacity = "0";
+          setTimeout(() => { toast.style.display = "none"; }, 300);
+        }, 2000);
+      }
     });
   </script>
 </body>
