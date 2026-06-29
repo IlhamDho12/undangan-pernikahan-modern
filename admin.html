@@ -645,7 +645,7 @@ Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
       const db = firebase.database();
 
       // PIN Security Protection
-      const correctPin = "1234";
+      const correctPin = "0822";
       const loginOverlay = document.getElementById("login-overlay");
       const pinInput = document.getElementById("pin-input");
       const btnLoginSubmit = document.getElementById("btn-login-submit");
@@ -801,6 +801,19 @@ Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
         renderCheckins(globalCheckins);
       }
 
+      function escapeHTML(str) {
+        if (!str) return "";
+        return str.toString().replace(/[&<>'"]/g, 
+          tag => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            "'": '&#39;',
+            '"': '&quot;'
+          }[tag] || tag)
+        );
+      }
+
       function renderCheckins(checkins) {
         if (checkins.length === 0) {
           checkinList.innerHTML = `
@@ -823,8 +836,8 @@ Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
           const itemHTML = `
             <div class="guest-item">
               <div class="guest-info">
-                <h4>${guest.name}</h4>
-                <p>${guest.id} • ${guest.guests} Pax • ${formattedTime} WIB</p>
+                <h4>${escapeHTML(guest.name)}</h4>
+                <p>${escapeHTML(guest.id)} • ${escapeHTML(guest.guests)} Pax • ${formattedTime} WIB</p>
               </div>
               <span class="checkin-badge">Hadir</span>
             </div>

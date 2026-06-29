@@ -380,6 +380,19 @@ document.addEventListener("DOMContentLoaded", function () {
     wishesRef.push(newWish);
   }
 
+  function escapeHTML(str) {
+    if (!str) return "";
+    return str.replace(/[&<>'"]/g, 
+      tag => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        "'": '&#39;',
+        '"': '&quot;'
+      }[tag] || tag)
+    );
+  }
+
   function renderWishes(wishes) {
     guestbookFeed.innerHTML = "";
 
@@ -390,13 +403,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const itemHTML = `
         <div class="guestbook-item">
-          <div class="guest-avatar">${firstLetter}</div>
+          <div class="guest-avatar">${escapeHTML(firstLetter)}</div>
           <div class="guest-msg-content">
             <div class="guest-msg-header">
-              <h4 class="guest-msg-name">${wish.name}</h4>
+              <h4 class="guest-msg-name">${escapeHTML(wish.name)}</h4>
               <span class="guest-msg-status ${statusClass}">${statusText}</span>
             </div>
-            <p class="guest-msg-text">${wish.message}</p>
+            <p class="guest-msg-text">${escapeHTML(wish.message)}</p>
           </div>
         </div>
       `;
